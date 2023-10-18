@@ -58,10 +58,13 @@ A testing version with recent bug fixes is available here:
 
 * [susam.github.io/cfr/cfr.html][DRAW3]
 
-[DEMO0]: https://susam.net/cfr.html#0
 [DRAW1]: https://susam.net/cfr.html
 [DRAW2]: https://susam.github.io/cfr.html
 [DRAW3]: https://susam.github.io/cfr/cfr.html
+
+[DEMO0]: https://susam.net/cfr.html#0
+[DEMO3]: https://susam.net/cfr.html#3
+
 [IMG0]: https://susam.github.io/blob/img/cfr/cfr-demo0-0.1.0.png
 [IMG3]: https://susam.github.io/blob/img/cfr/cfr-demo3-0.1.0.png
 
