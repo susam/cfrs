@@ -305,7 +305,7 @@ Release Checklist
 - Run: git status; git add -p
 - Run: VERSION=<VERSION>
 - Run: git commit -em "Set version to $VERSION"
-- Run: git tag $VERSION -m "CFR $VERSION"
+- Run: git tag $VERSION -m "CFR Brackets $VERSION"
 - Run: git push origin main $VERSION
 - Create a new release on GitHub.
 -->
