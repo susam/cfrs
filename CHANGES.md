@@ -1,7 +1,7 @@
 Changelog
 =========
 
-0.1.0 (UNRELEASED)
+0.1.0 (2023-10-18)
 ------------------
 
 ### Added
@@ -14,3 +14,6 @@ Changelog
 - Text field to type commands.
 - Buttons to insert commands.
 - Button to delete commands.
+- Demos 0 to 7.
+- Typing a digit loads demo if it exists.
+- Digit as URL fragment loads demo if it exists.

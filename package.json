@@ -1,0 +1,26 @@
+{
+  "name": "cfr",
+  "version": "0.1.0",
+  "description": "CFR Brackets",
+  "main": "cfr.html",
+  "files": [
+    "cfr.html"
+  ],
+  "keywords": [
+    "game",
+    "graphics",
+    "browser"
+  ],
+  "homepage": "https://github.com/susam/cfr",
+  "bugs": "https://github.com/susam/cfr/issues",
+  "license": "MIT",
+  "author": "Susam Pal (https://susam.net/)",
+  "repository": "github:susam/cfr",
+  "devDependencies": {
+    "standard": "latest",
+    "eslint-plugin-html": "latest"
+  },
+  "scripts": {
+    "lint": "standard --plugin html *.html"
+  }
+}
