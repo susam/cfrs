@@ -10,6 +10,8 @@ conists of only five simple commands:
 - `[`: Begin block.
 - `]`: Repeat current block.
 
+[![Screenshot of CFR Brackets Colour Bars][IMG0]][DEMO0]
+
 **[See Demo][DEMO0]**
 
 **[Draw Now][DRAW1]**
@@ -60,6 +62,8 @@ A testing version with recent bug fixes is available here:
 [DRAW1]: https://susam.net/cfr.html
 [DRAW2]: https://susam.github.io/cfr.html
 [DRAW3]: https://susam.github.io/cfr/cfr.html
+[IMG0]: https://susam.github.io/blob/img/cfr/cfr-demo0-0.1.0.png
+[IMG3]: https://susam.github.io/blob/img/cfr/cfr-demo3-0.1.0.png
 
 
 Get Started
@@ -98,6 +102,8 @@ demo.  Typing a digit may require an external keyboard.  If there is
 no external keyboard available, append `#` and an integer to the page
 URL with an on-screen keyboard.  For example, the URL
 <https://susam.net/cfr.html#3> shows demo number 3.
+
+[![Screenshot of CFR Brackets Demo 3][IMG3]][DEMO3]
 
 Here are direct links to demos currently available:
 [#0](https://susam.net/cfr.html#0),
