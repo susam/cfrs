@@ -18,9 +18,12 @@ conists of only five simple commands:
 Contents
 --------
 
+* [Introduction](#introduction)
 * [Draw](#draw)
 * [Get Started](#get-started)
+* [Demos](#demos)
 * [Commands](#commands)
+* [Out of Scope](#out-of-scope)
 * [License](#license)
 * [Support](#support)
 * [More](#more)
@@ -83,6 +86,8 @@ where each side of the octagon consists of 16 cells.
 [[[[[[[FF]]]]RCC]]]
 ```
 
+The maximum code length supported is 256 bytes.
+
 
 Demos
 -----
@@ -93,6 +98,20 @@ demo.  Typing a digit may require an external keyboard.  If there is
 no external keyboard available, append `#` and an integer to the page
 URL with an on-screen keyboard.  For example, the URL
 <https://susam.net/cfr.html#3> shows demo number 3.
+
+Here are direct links to demos currently available:
+[#0](https://susam.net/cfr.html#0),
+[#1](https://susam.net/cfr.html#1),
+[#2](https://susam.net/cfr.html#2),
+[#3](https://susam.net/cfr.html#3),
+[#4](https://susam.net/cfr.html#4),
+[#5](https://susam.net/cfr.html#5),
+[#6](https://susam.net/cfr.html#6),
+[#7](https://susam.net/cfr.html#7).
+
+If you have an interesting demos that fit in 64 bytes of code, please
+[create issues][ISSUES] and share them.  If the demo looks remarkable,
+it may be included to the above list of available demos.
 
 
 Commands
@@ -219,6 +238,27 @@ The following command moves the turtle 12 times.
 The inner block executes `FFF` twice.  The outer block repeats the
 inner block twice.  As a result, the inner block is repeated four
 times and the turtle moves forward by 12 cells.
+
+
+Out of Scope
+------------
+
+This web-based implementation of CFR[] is not going to support
+rendering complete CFR[] code embedded in the URL, say, as a fragment
+identifier.  Such features often leads to misuse.  A possible misuse
+could be someone sending direct links to this implementation with
+cleverly crafted code embedded in the link such that it draws an
+offensive or illegitimate text or picture on the canvas.  Such an
+image appearing on the web browsers of unsuspecting users simply by
+clicking a link to this implementation could lead to regulatory
+issues.  That is why rendering of arbitrary code embedded in URLs is
+never going to be supported.  See the post [Against URL-Based Content
+Rendering][rendering-post] for more thoughts about this.
+
+Only a curated list of demos can be linked to directly.  See section
+[Demos](#demos) for more details about it.
+
+[rendering-post]: https://susam.net/maze/against-url-based-content-rendering.html
 
 
 License
