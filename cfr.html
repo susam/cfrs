@@ -1,0 +1,429 @@
+<!--
+  CFR Brackets 0.1.0
+  Copyright (c) 2023 Susam Pal
+  Source: https://github.com/susam/cfr
+  License: MIT
+-->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>CFR[]</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+      body {
+        background: #111;
+        margin: 0;
+      }
+      canvas, pre, input, button {
+        background: #000;
+        box-sizing: border-box;
+        border: 1px solid #333;
+      }
+      canvas, pre, input {
+        display: block;
+        margin: 0 auto;
+      }
+      pre, input, button {
+        font-family: monospace,monospace;
+        font-size: 1em;
+        color: #999;
+      }
+      pre, input {
+        padding-left: 8px;
+      }
+      canvas {
+        image-rendering: pixelated;
+      }
+      pre {
+        overflow: auto;
+      }
+      input {
+        color: #ccc;
+        border-color: #666;
+      }
+      input:focus {
+        outline: none;
+      }
+      button {
+        color: #999;
+        font-weight: bold;
+        vertical-align: middle;
+        user-select: none;
+        -webkit-user-select: none;
+      }
+      button:active {
+        background: #222;
+      }
+      div {
+        text-align: center;
+      }
+    </style>
+    <script>
+      'use strict'
+
+      const LOGGING = true
+      const COLORS = ['#000', '#36f', '#0c0', '#0cc',
+        '#c00', '#c0c', '#cc0', '#ccc']
+      const GRID_SIZE = 256
+      const SCALE = 4
+      const PADDING = 8
+      const PANEL_HEIGHT = 40
+      const MAX_CODE_BYTES = 256
+      const DEMOS = [
+        '[[[[[[[[[[[[[[[FF]]]]]]]RRF[RRR]]]]]]C]]]',
+        '[[[[[FF]]]]]',
+        '[[[[[[[FF]]]]RCC]]]',
+        '[[[[[[[[[[[[[[F]]]]RCC]]]RR[FFF][RRR][FF]]]]]]]]',
+        'R[[[[[[[[[[[[[[FF]]]]]]]RRF[RRR]C]]]]]]]',
+        '[[[[[[[[[[[[FF]]]]RR]][[[FFF]]]RR[[F]][RRR]CC]]]]]]',
+        '[[[[[[[[[[[[[[[FF]]]]RR]][[[FFF]]]RR[[F]][RRR]CC]]]]]]R]]]',
+        '[[[[[[[[[[[[[[[FF]]]]C]]]RRF[RRR]F]]]]]]]]'
+      ]
+
+      let startTime = null
+      let canvas
+      let canvasSize
+      let ctx
+      let status
+      let text
+
+      let buttonColor
+      let buttonForward
+      let buttonRotate
+      let buttonBlock
+      let buttonRepeat
+      let buttonDelete
+      let buttons
+
+      const demos = {}
+      let prevText
+
+      function init () {
+        // Look up elements.
+        canvas = document.getElementById('canvas')
+        status = document.getElementById('status')
+        text = document.getElementById('text')
+
+        // Initialize canvas.
+        ctx = canvas.getContext('2d')
+        canvas.width = GRID_SIZE * SCALE
+        canvas.height = GRID_SIZE * SCALE
+
+        // Initialize buttons.
+        buttonForward = document.getElementById('forward')
+        buttonRotate = document.getElementById('rotate')
+        buttonBlock = document.getElementById('block')
+        buttonRepeat = document.getElementById('repeat')
+        buttonColor = document.getElementById('color')
+        buttonDelete = document.getElementById('delete')
+        buttons = [buttonColor, buttonForward, buttonRotate,
+          buttonBlock, buttonRepeat, buttonDelete]
+
+        // Add event listeners for text.
+        text.addEventListener('keyup', actionText)
+        text.addEventListener('paste', actionText)
+        text.addEventListener('cut', actionText)
+
+        // Add event listeners for buttons.
+        buttonColor.addEventListener('click', actionColor)
+        buttonForward.addEventListener('click', actionForward)
+        buttonRotate.addEventListener('click', actionRotate)
+        buttonBlock.addEventListener('click', actionBlock)
+        buttonRepeat.addEventListener('click', actionRepeat)
+        buttonDelete.addEventListener('click', actionDelete)
+        window.addEventListener('hashchange', actionHash)
+        window.addEventListener('resize', resize)
+
+        // Set up demos.
+        for (let i = 0; i < DEMOS.length; ++i) {
+          demos[i.toString()] = DEMOS[i]
+        }
+
+        // Initialize input code and output.
+        resize()
+        actionHash()
+        text.setSelectionRange(text.value.length, text.value.length)
+      }
+
+      function resize () {
+        document.body.style.padding = PADDING + 'px'
+        const availableWidth = window.innerWidth - 2 * PADDING
+        const availableHeight = window.innerHeight - 3 * PANEL_HEIGHT - 5 * PADDING
+
+        // Resize canvas.
+        canvasSize = Math.min(availableWidth, availableHeight)
+        canvas.style.width = canvasSize + 'px'
+        canvas.style.height = canvasSize + 'px'
+
+        // Resize status panel.
+        status.style.width = canvasSize + 'px'
+        status.style.height = PANEL_HEIGHT + 'px'
+        status.style.lineHeight = PANEL_HEIGHT + 'px'
+        status.style.marginTop = PADDING + 'px'
+
+        // Resize code text panel.
+        text.style.width = canvasSize + 'px'
+        text.style.height = PANEL_HEIGHT + 'px'
+        text.style.marginTop = PADDING + 'px'
+
+        // Resize buttons.
+        const buttonWidth = ((canvasSize - (buttons.length - 1) * PADDING) /
+          buttons.length)
+        for (let i = 0; i < buttons.length; ++i) {
+          const button = buttons[i]
+          button.style.marginTop = PADDING + 'px'
+          button.style.width = buttonWidth + 'px'
+          button.style.height = PANEL_HEIGHT + 'px'
+          button.style.marginLeft = (i === 0 ? 0 : PADDING) + 'px'
+        }
+        log('resized: canvas: ' + canvasSize + '; button: ' + buttonWidth)
+      }
+
+      function draw () {
+        if (prevText === text.value) {
+          return
+        }
+        log('draw', text.value)
+        ctx.fillStyle = COLORS[0]
+        ctx.fillRect(0, 0, GRID_SIZE * SCALE, GRID_SIZE * SCALE)
+        evaluate(text.value)
+        prevText = text.value
+        log('draw complete')
+      }
+
+      function evaluate (code) {
+        let x = Math.floor((GRID_SIZE - 1) / 2)
+        let y = Math.floor((GRID_SIZE - 1) / 2)
+        let color = 7
+        let heading = 0
+        let ops = 0
+        let idx = 0
+        const stack = []
+
+        startTime = Date.now()
+        logOp(ops, '-', idx, 'BEGIN', color, x, y, heading)
+
+        if (code.length > MAX_CODE_BYTES) {
+          error('Code contains ' + code.length + ' bytes; must not exceed ' +
+                MAX_CODE_BYTES)
+          return
+        }
+
+        while (idx < code.length) {
+          const execIdx = idx
+          const op = code.charAt(idx)
+          if (op === 'C') {
+            color = (color + 1) % COLORS.length
+            ++idx
+          } else if (op === 'F') {
+            if (heading === 1 || heading === 2 || heading === 3) {
+              x = (x + 1) % GRID_SIZE
+            } else if (heading === 5 || heading === 6 || heading === 7) {
+              x = (x - 1 + GRID_SIZE) % GRID_SIZE
+            }
+            if (heading === 7 || heading === 0 || heading === 1) {
+              y = (y - 1 + GRID_SIZE) % GRID_SIZE
+            } else if (heading === 3 || heading === 4 || heading === 5) {
+              y = (y + 1) % GRID_SIZE
+            }
+            ctx.fillStyle = COLORS[color]
+            ctx.fillRect(x * SCALE, y * SCALE, SCALE, SCALE)
+            ++idx
+          } else if (op === 'R') {
+            heading = (heading + 1) % 8
+            ++idx
+          } else if (op === '[') {
+            stack.push([idx + 1, 1])
+            ++idx
+          } else if (op === ']') {
+            if (stack.length === 0) {
+              error('Unexpected \']\'')
+              return
+            }
+            const [jmpIdx, count] = stack.pop()
+            if (count !== 0) {
+              stack.push([jmpIdx, count - 1])
+              idx = jmpIdx
+            } else {
+              ++idx
+            }
+          } else {
+            error('Unknown operation')
+            return
+          }
+          logOp(ops, execIdx, idx, op, color, x, y, heading)
+          ++ops
+        }
+
+        if (ops === 0) {
+          status.innerHTML = 'READY'
+        } else {
+          const ms = Date.now() - startTime
+          const rate = ms === 0 ? '-' : Math.round(10000 * ops / ms) / 10
+          const msg = text.value.length + ' bytes, ' + ops + ' ops, ' +
+                (ms / 1000) + ' s, ' + rate + ' ops/s'
+          status.innerHTML = msg
+        }
+
+        logOp(ops, '-', idx, 'END', color, x, y, heading)
+      }
+
+      function error (msg) {
+        ctx.fillStyle = COLORS[4]
+        ctx.fillRect(0, 0, GRID_SIZE * SCALE, GRID_SIZE * SCALE)
+        status.innerHTML = 'ERROR: ' + msg
+      }
+
+      function actionHash () {
+        if (window.location.hash !== '') {
+          text.value = window.location.hash.substring(1)
+        }
+        normalizeDraw()
+      }
+
+      function clearHash () {
+        if (window.location.hash !== '') {
+          window.location.hash = ''
+        }
+      }
+
+      function actionText () {
+        clearHash()
+        setTimeout(normalizeDraw, 10)
+      }
+
+      function normalizeDraw () {
+        lookupDemo()
+        sanitizeText()
+        draw()
+      }
+
+      function lookupDemo () {
+        const code = demos[text.value]
+        if (typeof code !== 'undefined') {
+          text.value = code
+        }
+      }
+
+      function actionColor (e) {
+        e.preventDefault()
+        insertText('C')
+        draw()
+      }
+
+      function actionForward (e) {
+        e.preventDefault()
+        insertText('F')
+        draw()
+      }
+
+      function actionRotate (e) {
+        e.preventDefault()
+        insertText('R')
+        draw()
+      }
+
+      function actionBlock (e) {
+        e.preventDefault()
+        insertText('[')
+        draw()
+      }
+
+      function actionRepeat (e) {
+        e.preventDefault()
+        insertText(']')
+        draw()
+      }
+
+      function actionDelete (e) {
+        e.preventDefault()
+        deleteText()
+        draw()
+      }
+
+      function insertText (ch) {
+        const cursorStart = text.selectionStart
+        const left = text.value.substring(0, cursorStart)
+        const right = text.value.substring(text.selectionEnd)
+        text.value = left + ch + right
+        text.focus()
+        text.setSelectionRange(cursorStart + 1, cursorStart + 1)
+        clearHash()
+      }
+
+      function deleteText () {
+        let cursorStart = text.selectionStart
+        let left
+        const right = text.value.substring(text.selectionEnd)
+        if (text.selectionEnd > cursorStart) {
+          left = text.value.substring(0, cursorStart)
+        } else if (cursorStart > 0) {
+          left = text.value.substring(0, cursorStart - 1)
+          --cursorStart
+        } else {
+          left = ''
+        }
+        text.value = left + right
+        text.focus()
+        text.setSelectionRange(cursorStart, cursorStart)
+        clearHash()
+      }
+
+      function sanitizeText () {
+        const cursorStart = text.selectionStart
+        const cursorEnd = text.selectionEnd
+        const cursorDir = text.selectionDirection
+
+        let result = ''
+        for (let i = 0; i < text.value.length; ++i) {
+          const ch = text.value.charAt(i).toUpperCase()
+          if (ch === 'C' || ch === 'F' || ch === 'R' ||
+              ch === '[' || ch === ']') {
+            result += ch
+          }
+        }
+
+        if (result !== text.value) {
+          text.value = result
+          text.setSelectionRange(cursorStart, cursorEnd, cursorDir)
+        }
+      }
+
+      function log () {
+        if (LOGGING) {
+          const args = Array.prototype.slice.call(arguments)
+          let ts
+          if (startTime === null) {
+            ts = '-'
+          } else {
+            ts = ((Date.now() - startTime) / 1000)
+          }
+          console.log('[' + ts + '] ' + args.join(' '))
+        }
+      }
+
+      function logOp (ops, execIdx, nextIdx, op, color, x, y, heading) {
+        if (LOGGING) {
+          log('(' + ops + ') ' + execIdx + ': ' + op + '; color: ' + color +
+              '; x: ' + x + '; y: ' + y + '; next: ' + nextIdx)
+        }
+      }
+
+      window.addEventListener('load', init)
+    </script>
+  </head>
+  <body>
+    <canvas id="canvas"></canvas>
+    <pre id="status"></pre>
+    <input id="text" inputmode="none" autofocus
+           placeholder="Type code or type digit or press buttons below.">
+    <div>
+      <button id="color" title="Color">C</button><!--
+      --><button id="forward" title="Forward">F</button><!--
+      --><button id="rotate" title="Rotate">R</button><!--
+      --><button id="block" title="Begin Block">[</button><!--
+      --><button id="repeat" title="Repeat Block">]</button><!--
+      --><button id="delete" title="Delete">&lt;</button>
+    </div>
+  </body>
+</html>
