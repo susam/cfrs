@@ -253,8 +253,8 @@ Out of Scope
 ------------
 
 This web-based implementation of CFR[] is not going to support
-rendering complete CFR[] code embedded in the URL, say, as a fragment
-identifier.  Such features often leads to misuse.  A possible misuse
+rendering arbitrary CFR[] code embedded in the URL, say, as a fragment
+identifier.  Such features often lead to misuse.  A possible misuse
 could be someone sending direct links to this implementation with
 cleverly crafted code embedded in the link such that it draws an
 offensive or illegitimate text or picture on the canvas.  Such an
