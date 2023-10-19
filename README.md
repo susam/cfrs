@@ -6,7 +6,7 @@ conists of only five simple commands:
 
 - `C`: Colour change.
 - `F`: Forward move by one cell.
-- `R`: Rotate right (clockwise) by 1/8th of a turn.
+- `R`: Rotate right (clockwise) by 1/8th of a full turn.
 - `[`: Begin block.
 - `]`: Repeat current block.
 
@@ -21,10 +21,14 @@ Contents
 --------
 
 * [Introduction](#introduction)
-* [Draw](#draw)
+* [Implementation](#implementation)
 * [Get Started](#get-started)
 * [Demos](#demos)
+* [Canvas](#canvas)
+* [Invisible Virtual Turtle](#invisible-virtual-turtle)
 * [Commands](#commands)
+* [Repeatable Block Examples](#repeatable-block-examples)
+* [Code Normalisation and Validation](#code-normalisation-and-validation)
 * [Out of Scope](#out-of-scope)
 * [License](#license)
 * [Support](#support)
@@ -36,17 +40,17 @@ Introduction
 
 CFR[] is inspired by the educational programming language Logo and the
 esoteric programming language P′′ (P double prime).  Inspired by Logo,
-CFR[] has a virtual turtle that moves around on a canvas of 256x256
-cells and paints the cells on which it moves.  Inspired by P′′, it has
-an extremely limited set of commands.  CFR[] is intentionally meant to
-be hard to write in and hard to read.
+CFR[] has a virtual turtle that moves around on a graphical canvas and
+paints the canvas as it moves.  Inspired by P′′, it has an extremely
+small set of commands.  CFR[] is intentionally meant to be hard to
+write in and hard to read.
 
 This project introduces the CFR[] language and provides a web-based
 implementation using HTML5 Canvas and JavaScript.
 
 
-Draw
-----
+Implementation
+--------------
 
 The current stable version of a CFR[] implementation is available at
 the following links:
@@ -100,10 +104,10 @@ Demos
 -----
 
 The implementation in this project comes with a small collection of
-demos.  Type any digit between `0` and `7` to see a corresponding
+demos.  Type any digit between `0` and `7` to see the corresponding
 demo.  Typing a digit may require an external keyboard.  If there is
-no external keyboard available, append `#` and an integer to the page
-URL with an on-screen keyboard.  For example, the URL
+no external keyboard available, append `#` and a digit to the page URL
+with an on-screen keyboard.  For example, the URL
 <https://susam.net/cfr.html#3> shows demo number 3.
 
 [![Screenshot of CFR Brackets Demo 3][IMG3]][DEMO3]
@@ -115,16 +119,52 @@ Here are direct links to demos currently available:
 [#3](https://susam.net/cfr.html#3),
 [#4](https://susam.net/cfr.html#4),
 [#5](https://susam.net/cfr.html#5),
-[#6](https://susam.net/cfr.html#6),
+[#6](https://susam.net/cfr.html#6), and
 [#7](https://susam.net/cfr.html#7).
 
-If you have an interesting demos that fit in 64 bytes of code, please
-[create issues][ISSUES] and share them.  If the demo looks remarkable,
-it may be included to the above list of available demos.
+If you have an interesting demo that fits in 64 bytes of code, please
+[create an issue][ISSUES] and share it.  If the demo looks very
+interesting, it may be included to the above list of available demos.
+
+
+Canvas
+------
+
+The drawing canvas is divided into a grid of 256x256 cells.  There are
+256 rows with 256 cells in each row.  Initially, all 65536 cells of
+the canvas are painted black.
+
+The rows are numbered 0, 1, 2, etc.  Similarly, the columns are
+numbered 0, 1, 2, etc. too.  The cell at the top-left corner is at row
+0 and column 0.  The cell at the bottom-right corner is at row 255 and
+column 255.
+
+
+Invisible Virtual Turtle
+------------------------
+
+The CFR[] commands are described in terms of movement of a virtual
+turtle and changes in its properties.  The virtual turtle is always
+invisible.  It has three properties:
+
+- Location: The cell where the turtle is currently situated.
+- Heading: The direction for the turtle's next movement if it moves.
+- Colour: The colour to be used for painting the next cell.
+
+The current location, heading, and colour of the turtle are determined
+by the initial properties and the preceding commands.  The initial
+properties of the turtle are as follows:
+
+- Location: Row 127 and column 127.
+- Heading: North (up).
+- Colour: White.
 
 
 Commands
 --------
+
+This section describes all five commands of CFR[] in detail.
+
 
 ### C
 
@@ -140,10 +180,10 @@ total of 8 colours are supported.  They are:
 - Yellow
 - White
 
-The initial colour is always white.  Each `C` command changes the
-drawing colour to the next one in the above list.  When the current
-drawing colour is white, `C` changes the drawing colour to black,
-i.e., the drawing colour *wraps around* to black.
+The initial colour is white.  Each `C` command changes the drawing
+colour to the next one in the above list.  When the current drawing
+colour is white, `C` changes the drawing colour to black, i.e., the
+drawing colour *wraps around* to black.
 
 The following code draws four cells in white (the initial colour),
 then four cells in black, and finally four cells in blue.
@@ -161,37 +201,19 @@ black are going to be invisible on the black background.
 ### F
 
 The `F` command moves the virtual turtle forward by one cell and
-paints the cell it moves to with the current drawing colour.
+paints the cell it moves to with the current drawing colour.  The
+direction of movement is determined by the current heading of the
+turtle.  Each `F` command moves the turtle by exactly one cell and
+paints the entire cell it has moved to.  This is true for diagonal
+movements too.  For example, if the turtle moves in the northeast
+direction, it moves from the current cell diagonally to the next cell
+that is touching the top-right corner of the current cell.  It then
+paints that new cell it has moved to.
 
-The virtual turtle is invisible.  Its current position and heading
-(direction of movement) is determined by the preceding commands.
-
-The drawing canvas is divided into a grid of 256x256 cells.  Number
-the rows of cells on the canvas 0, 1, 2, etc. and we similarly number
-the columns of cells 0, 1, 2, etc., so that the cell at the
-bottom-right corner is at row 255 and column 255.  Then the initial
-position of the turtle is 127, 127.  If we enter `F` as the very first
-command, the turtle moves up by one cell and paints the cell at row
-126 and column 127.
-
-The initial heading is north (up).  The heading can be altered with
-the `R` command explained in the next section.
-
-Each `F` command moves the turtle by one cell only.  This is true for
-diagonal movements too.  For example, if the turtle moves in the
-northeast direction, it moves from the current cell diagonally to the
-next cell at the top-right corner of the current cell and then paints
-that cell with the current drawing colour.  Since the `F` command
-always moves the turtle by a whole cell vertically, horizontally, or
-diagonally, when we draw "lines" by repeating the `F` command, a
-diagonal line consisting of a certain number of cells is going to look
-longer than a vertical or horizontal line with the same number of
-cells.
-
-When the turtle is at the edge of a canvas and the next command moves
-the turtle beyond the edge of the canvas, the turtle simply wraps
-around to the opposite edge of the canvas, i.e., the turtle reenters
-the canvas from the opposite edge.
+When the turtle is at the edge of the canvas and the next command
+moves the turtle beyond the edge, the turtle simply wraps around to
+the opposite edge of the canvas, i.e., the turtle reenters the canvas
+from the opposite edge.
 
 
 ### R
@@ -199,7 +221,7 @@ the canvas from the opposite edge.
 The `R` command changes the heading of the turtle by rotating it by
 1/8th of a complete turn.  The initial heading is north (up).  The
 following command rotates the turtle three times so that its heading
-is southeast and then paints 4 cells diagonally:
+changes to southeast and then paints 4 cells diagonally:
 
 ```
 RRRFFFF
@@ -208,31 +230,37 @@ RRRFFFF
 
 ### [
 
-The `[` command begins a repeatable block.
+The `[` command marks the beginning of a repeatable block.  It does
+not change the properties of the turtle.  This is a control flow
+command that only introduces a new repeatable block without producing
+any visual side effects.
 
 
 ### ]
 
-The `]` command repeats the current repeatable block once.  As a
-result, when the code evaluator enters a block marked with `[`, the
-block is executed twice before the evaluator leaves the end of the
-block marked with `]`.
+The `]` command marks the end of the current repeatable block and
+repeats that block exactly once.  As a result, when the code evaluator
+enters a block marked with `[`, the block is executed twice before the
+evaluator leaves the end of the block marked with `]`.
 
-For example, the following code moves the turtle twice and then
-rotates it once:
+
+Repeatable Block Examples
+-------------------------
+
+The following code moves the turtle twice and then rotates it once:
 
 ```
 [F]R
 ```
 
 The opening square bracket (`[`) marks the beginning of a block.  Then
-`F` is executed as usual thus moving the turtle forward once.  Then
+`F` is executed as usual thereby moving the turtle forward once.  Then
 the closing square bracket (`]`) repeats the current block thereby
 executing the `F` inside the block once more.  Finally the evaluator
 moves ahead to `R` and rotates the turtle once.  Note that the
 evaluator leaves a block after the block has been repeated twice.
 
-The following command moves the turtle 6 times.
+The following code moves the turtle 6 times:
 
 ```
 [FFF]
@@ -247,6 +275,27 @@ The following command moves the turtle 12 times.
 The inner block executes `FFF` twice.  The outer block repeats the
 inner block twice.  As a result, the inner block is repeated four
 times and the turtle moves forward by 12 cells.
+
+
+Code Normalisation and Validation
+---------------------------------
+
+The reference implementation performs the following two normalisation
+steps (in the given order) on the input code before executing the
+code:
+
+- Lowercase letters are converted to uppercase.
+- Any character in the input code that does not match a valid CFR[]
+  command is removed.
+
+The reference implementation generates errors when the following conditions are met:
+
+- A closing square bracket (`]`) is encountered that does not have a
+  corresponding open square bracket (`[`).
+- The length of the code exceeds 256 characters.
+
+When an error is generated, the entire canvas is painted red and the
+execution halts immediately.
 
 
 Out of Scope
