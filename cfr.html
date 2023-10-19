@@ -1,5 +1,5 @@
 <!--
-  CFR Brackets 0.1.0
+  CFR Brackets 0.1.1
   Copyright (c) 2023 Susam Pal
   Source: https://github.com/susam/cfr
   License: MIT
@@ -9,6 +9,7 @@
   <head>
     <title>CFR[]</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="An extremely minimal drawing language consisting of only five simple commands: C, F, R, [, and ].">
     <style>
       body {
         background: #111;
@@ -23,7 +24,7 @@
         display: block;
         margin: 0 auto;
       }
-      pre, input, button {
+      pre, input, button, a {
         font-family: monospace,monospace;
         font-size: 1em;
         color: #999;
@@ -54,8 +55,16 @@
       button:active {
         background: #222;
       }
-      div {
+      div, footer {
         text-align: center;
+      }
+      footer a {
+        line-height: 4;
+        margin-right: 1.5em;
+        color: #69c;
+      }
+      footer a:last-child {
+        margin-right: 0;
       }
     </style>
     <script>
@@ -425,5 +434,10 @@
       --><button id="repeat" title="Repeat Block">]</button><!--
       --><button id="delete" title="Delete">&lt;</button>
     </div>
+    <footer>
+      <a href="https://github.com/susam/cfr">GitHub</a>
+      <a href="https://mastodon.social/@susam">Mastodon</a>
+      <a href="https://github.com/susam/cfr/blob/main/LICENSE.md">License</a>
+    </footer>
   </body>
 </html>
