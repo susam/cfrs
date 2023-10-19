@@ -1,6 +1,15 @@
 Changelog
 =========
 
+0.1.1 (2023-10-20)
+------------------
+
+### Added
+
+- Page description in a `<meta>` element.
+- Footer with links to related resources.
+
+
 0.1.0 (2023-10-18)
 ------------------
 
