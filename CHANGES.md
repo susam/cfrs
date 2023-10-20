@@ -1,6 +1,14 @@
 Changelog
 =========
 
+0.2.0 (WIP)
+-----------
+
+### Added
+
+- Distributable links for code not exceeding 64 characters in length.
+
+
 0.1.1 (2023-10-20)
 ------------------
 

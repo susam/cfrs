@@ -29,6 +29,7 @@ Contents
 * [Commands](#commands)
 * [Repeatable Block Examples](#repeatable-block-examples)
 * [Code Normalisation and Validation](#code-normalisation-and-validation)
+* [Distributable Links](#distributable-links)
 * [Out of Scope](#out-of-scope)
 * [License](#license)
 * [Support](#support)
@@ -298,25 +299,22 @@ When an error is generated, the entire canvas is painted red and the
 execution halts immediately.
 
 
-Out of Scope
-------------
+Distributable Links
+-------------------
 
-This web-based implementation of CFR[] is not going to support
-rendering arbitrary CFR[] code embedded in the URL, say, as a fragment
-identifier.  Such features often lead to misuse.  A possible misuse
-could be someone sending direct links to this implementation with
-cleverly crafted code embedded in the link such that it draws an
-offensive or illegitimate text or picture on the canvas.  Such an
-image appearing on the web browsers of unsuspecting users simply by
-clicking a link to this implementation could lead to regulatory
-issues.  That is why rendering of arbitrary code embedded in URLs is
-never going to be supported.  See the post [Against URL-Based Content
-Rendering][rendering-post] for more thoughts about this.
+The reference implementation provides distributable links when the
+input code is 64 bytes or less in length.  Note that the
+implementation allows code up to a maximum length of 256 bytes.
+However, no distributable link is generated when the code length
+exceeds 64 bytes.  Thus code that does not exceed 64 bytes in length
+has a special status in the reference implementation.
 
-Only a curated list of demos can be linked to directly.  See section
-[Demos](#demos) for more details about it.
-
-[rendering-post]: https://susam.net/maze/against-url-based-content-rendering.html
+The distributable link encodes the input code and appends it as a URL
+fragment to the address of the current page.  Copy the URL with the
+encoded input code embedded in it from the address bar of the web
+browser in order to share it with others.  When the recipient of the
+URL opens it with their web browser, the implementation reads the code
+embedded in the URL, expands it, and executes it.
 
 
 License
