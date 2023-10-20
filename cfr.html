@@ -78,7 +78,7 @@
       const PADDING = 8
       const PANEL_HEIGHT = 40
       const MAX_CODE_LEN = 256
-      const MAX_HASH_LEN = 64
+      const MAX_DIST_LEN = 64
       const DEMOS = [
         '[[[[[[[[[[[[[[[FF]]]]]]]RRF[RRR]]]]]]C]]]',
         '[[[[[FF]]]]]',
@@ -299,12 +299,14 @@
       }
 
       function updateHash () {
-        if (text.value.length > MAX_HASH_LEN) {
+        if (text.value.length > MAX_DIST_LEN) {
           window.location.hash = ''
         } else {
-          const hash = '#' + urlEncode(text.value)
-          if (hash !== window.location.hash) {
-            window.location.hash = hash
+          const encoded = urlEncode(text.value)
+          const hash = window.location.hash
+          const fragment = hash === '' ? '' : hash.substring(1)
+          if (encoded !== fragment) {
+            window.location.hash = '#' + encoded
             log('set hash from code:', window.location.hash)
           }
         }
@@ -428,7 +430,7 @@
         s = s.replaceAll('B', '[').replaceAll('E', ']')
         let result = ''
         const match = s.match(/\D+|\d+/g)
-        const errMsg = 'Code embedded in URL exceeds ' + MAX_HASH_LEN +
+        const errMsg = 'Code embedded in URL exceeds ' + MAX_DIST_LEN +
               ' bytes on expansion'
         if (match !== null) {
           for (let i = 0; i < match.length; ++i) {
@@ -436,13 +438,13 @@
               result += match[i]
             } else {
               const count = +match[i]
-              if (count > MAX_HASH_LEN) {
+              if (count > MAX_DIST_LEN) {
                 error(errMsg)
                 return null
               }
               result += result.charAt(result.length - 1).repeat(count - 1)
             }
-            if (result.length > MAX_HASH_LEN) {
+            if (result.length > MAX_DIST_LEN) {
               error(errMsg)
               return null
             }
