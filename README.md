@@ -30,7 +30,6 @@ Contents
 * [Repeatable Block Examples](#repeatable-block-examples)
 * [Code Normalisation and Validation](#code-normalisation-and-validation)
 * [Distributable Links](#distributable-links)
-* [Out of Scope](#out-of-scope)
 * [License](#license)
 * [Support](#support)
 * [More](#more)
