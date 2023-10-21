@@ -25,9 +25,9 @@ Contents
 * [Get Started](#get-started)
 * [Demos](#demos)
 * [Canvas](#canvas)
-* [Invisible Virtual Turtle](#invisible-virtual-turtle)
+* [Turtle](#turtle)
 * [Commands](#commands)
-* [Repeatable Block Examples](#repeatable-block-examples)
+* [Repeatable Blocks](#repeatable-blocks)
 * [Code Normalisation and Validation](#code-normalisation-and-validation)
 * [Distributable Links](#distributable-links)
 * [License](#license)
@@ -140,20 +140,20 @@ numbered 0, 1, 2, etc. too.  The cell at the top-left corner is at row
 column 255.
 
 
-Invisible Virtual Turtle
-------------------------
+Turtle
+------
 
-The CFR[] commands are described in terms of movement of a virtual
-turtle and changes in its properties.  The virtual turtle is always
-invisible.  It has three properties:
+The CFR[] commands are described in terms of the movement of an
+invisible virtual turtle and changes in its properties.  The turtle
+has three properties:
 
 - Location: The cell where the turtle is currently situated.
 - Heading: The direction for the turtle's next movement if it moves.
 - Colour: The colour to be used for painting the next cell.
 
-The current location, heading, and colour of the turtle are determined
-by the initial properties and the preceding commands.  The initial
-properties of the turtle are as follows:
+Its current location, heading, and colour are determined by its
+initial properties and the preceding commands.  The initial properties
+of the turtle are as follows:
 
 - Location: Row 127 and column 127.
 - Heading: North (up).
@@ -244,8 +244,8 @@ enters a block marked with `[`, the block is executed twice before the
 evaluator leaves the end of the block marked with `]`.
 
 
-Repeatable Block Examples
--------------------------
+Repeatable Blocks
+-----------------
 
 The following code moves the turtle twice and then rotates it once:
 
