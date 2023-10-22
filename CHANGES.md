@@ -1,6 +1,19 @@
 Changelog
 =========
 
+0.3.0 (WIP)
+-----------
+
+### Added
+
+- Key `?` to toggle help.
+- Button `?` to toggle help.
+
+### Fixed
+
+- Do not alter browser history while embedding code in the URL.
+
+
 0.2.0 (2023-10-21)
 ------------------
 

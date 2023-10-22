@@ -4,11 +4,17 @@ CFR[]
 CFR[] (CFR Brackets) is an extremely minimal drawing language that
 conists of only five simple commands:
 
-- `C`: Colour change.
-- `F`: Forward move by one cell.
-- `R`: Rotate right (clockwise) by 1/8th of a full turn.
-- `[`: Begin block.
-- `]`: Repeat current block.
+- `C`: Change colour.
+- `F`: Move forward by one cell and paint the new cell.
+- `R`: Rotate right (clockwise) by 45°.
+- `[`: Begin repeatable block and continue executing subsequent code.
+- `]`: Repeat current repeatable block once more and end the block.
+
+Note that `]` goes back to the beginning of the current repeatable
+block, repeats it once more, and ends the block.  Thus a block bounded
+by `[` and `]` behaves like a loop that runs twice before the block
+exits.  See sections [Commands](#commands) and [Loops](#loops) for
+more details about this.
 
 [![Screenshot of CFR Brackets Colour Bars][IMG0]][DEMO0]
 
@@ -27,7 +33,7 @@ Contents
 * [Canvas](#canvas)
 * [Turtle](#turtle)
 * [Commands](#commands)
-* [Repeatable Blocks](#repeatable-blocks)
+* [Loops](#loops)
 * [Code Normalisation and Validation](#code-normalisation-and-validation)
 * [Distributable Links](#distributable-links)
 * [License](#license)
@@ -244,8 +250,8 @@ enters a block marked with `[`, the block is executed twice before the
 evaluator leaves the end of the block marked with `]`.
 
 
-Repeatable Blocks
------------------
+Loops
+-----
 
 The following code moves the turtle twice and then rotates it once:
 
