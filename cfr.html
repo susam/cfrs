@@ -1,5 +1,5 @@
 <!--
-  CFR Brackets 0.3.0-dev1
+  CFR Brackets 0.3.0-dev2
   Copyright (c) 2023 Susam Pal
   Source: https://github.com/susam/cfr
   License: MIT
@@ -115,6 +115,7 @@
 
       const demos = {}
       let prevText
+      let questioned = false
 
       function init () {
         // Look up elements.
@@ -137,7 +138,7 @@
         buttonDelete = document.getElementById('delete')
         buttonHelp = document.getElementById('help')
         buttons = [buttonColor, buttonForward, buttonRotate,
-                   buttonBlock, buttonRepeat, buttonDelete, buttonHelp]
+          buttonBlock, buttonRepeat, buttonDelete, buttonHelp]
 
         // Add event listeners for text.
         text.addEventListener('keyup', actionKey)
@@ -282,7 +283,7 @@
         }
 
         if (ops === 0) {
-          status.innerHTML = 'READY.  Type &lsquo;?&rsquo; for help.'
+          status.innerHTML = 'READY.  Type &lsquo;?&rsquo; anytime for help.'
         } else {
           const ms = Date.now() - startTime
           const rate = ms === 0 ? '-' : Math.round(10000 * ops / ms) / 10
@@ -335,15 +336,14 @@
       }
 
       function normalizeDraw () {
-        if (text.value === '?') {
-          text.value = ''
-          toggleHelp()
-          return
-        }
         lookupDemo()
         sanitizeText()
         updateHash()
         draw()
+        if (questioned) {
+          toggleHelp()
+          questioned = false
+        }
       }
 
       function lookupDemo () {
@@ -404,7 +404,7 @@
           log('help displayed')
         } else {
           log('forcing redraw to clear help')
-          prevText = null  // Force redrawing.
+          prevText = null // Force redraw to clear help.
           draw()
         }
       }
@@ -445,8 +445,8 @@
       }
 
       function sanitizeText () {
-        const cursorStart = text.selectionStart
-        const cursorEnd = text.selectionEnd
+        let cursorStart = text.selectionStart
+        let cursorEnd = text.selectionEnd
         const cursorDir = text.selectionDirection
 
         let result = ''
@@ -455,6 +455,18 @@
           if (ch === 'C' || ch === 'F' || ch === 'R' ||
               ch === '[' || ch === ']') {
             result += ch
+            continue
+          }
+          if (ch === '?') {
+            questioned = true
+          }
+          // Since non-command characters are being removed from the
+          // code, adjust the cursor position accordingly.
+          if (i < cursorStart) {
+            --cursorStart
+          }
+          if (i < cursorEnd) {
+            --cursorEnd
           }
         }
 
@@ -533,7 +545,8 @@
       <ul>
         <li>
           <p>
-            <strong>C</strong> - Change color to
+            <strong>C</strong> - Change colour to the next one from
+            the cyclic sequence:
             <span style="background: #999; color: #000; padding: 0 2px">black</span>,
             <span style="color: #36f">blue</span>,
             <span style="color: #0c0">green</span>,
@@ -557,16 +570,15 @@
         </li>
         <li>
           <p>
-            <strong>[</strong> - Mark the beginning a repeatable block
-            and continue executing code occurring after
-            &lsquo;<strong>[</strong>&rsquo; normally.
+            <strong>[</strong> - Begin a repeatable block and continue
+            executing subsequent code normally.
           </p>
         </li>
         <li>
           <p>
             <strong>]</strong> - Go back to the beginning of the
-            current repeatable block, repeat it once more, and end the
-            block. &nbsp;Thus a block bounded by
+            current repeatable block, repeat it once more, and exit
+            the block. &nbsp;A block bounded by
             &lsquo;<strong>[</strong>&rsquo; and
             &lsquo;<strong>]</strong>&rsquo; behaves like a loop that
             runs twice before the block exits.
@@ -609,7 +621,7 @@
     <input id="text" inputmode="none" autofocus
            placeholder="Type code here.">
     <div id="buttons">
-      <button id="color" title="Change color">C</button><!--
+      <button id="color" title="Change colour">C</button><!--
       --><button id="forward" title="Move forward and paint cell">F</button><!--
       --><button id="rotate" title="Rotate by 45&deg;">R</button><!--
       --><button id="block" title="Begin block">[</button><!--

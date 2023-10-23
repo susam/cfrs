@@ -6,8 +6,8 @@ Changelog
 
 ### Added
 
-- Key `?` to toggle help.
-- Button `?` to toggle help.
+- Typing `?` anytime toggles help.
+- Pressing the button labelled `?` anytime toggles help.
 
 ### Fixed
 

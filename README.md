@@ -7,14 +7,14 @@ conists of only five simple commands:
 - `C`: Change colour.
 - `F`: Move forward by one cell and paint the new cell.
 - `R`: Rotate right (clockwise) by 45°.
-- `[`: Begin repeatable block and continue executing subsequent code.
-- `]`: Repeat current repeatable block once more and end the block.
+- `[`: Begin a repeatable block and continue executing subsequent code.
+- `]`: Repeat current repeatable block once more and exit the block.
 
 Note that `]` goes back to the beginning of the current repeatable
-block, repeats it once more, and ends the block.  Thus a block bounded
-by `[` and `]` behaves like a loop that runs twice before the block
-exits.  See sections [Commands](#commands) and [Loops](#loops) for
-more details about this.
+block, repeats it once more, and exits the block.  Thus a block
+bounded by `[` and `]` behaves like a loop that runs twice before the
+block exits.  See sections [Commands](#commands) and [Loops](#loops)
+for more details about this.
 
 [![Screenshot of CFR Brackets Colour Bars][IMG0]][DEMO0]
 
@@ -239,15 +239,18 @@ RRRFFFF
 The `[` command marks the beginning of a repeatable block.  It does
 not change the properties of the turtle.  This is a control flow
 command that only introduces a new repeatable block without producing
-any visual side effects.
+any visual side effects.  Execution of the remaining code that comes
+after `[` continues as usual.
 
 
 ### ]
 
-The `]` command marks the end of the current repeatable block and
-repeats that block exactly once.  As a result, when the code evaluator
-enters a block marked with `[`, the block is executed twice before the
-evaluator leaves the end of the block marked with `]`.
+The `]` command marks the end of a repeatable block.  When the
+evaluator reads `]`, it jumps back to the beginning of the current
+repeatable block, repeats it once more, and exits the block.  As a
+result, when the code evaluator enters a block marked with `[`, the
+block is executed twice before the evaluator leaves the end of the
+block marked with `]`.
 
 
 Loops
