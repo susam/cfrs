@@ -85,16 +85,14 @@
       const PANEL_HEIGHT = 40
       const MAX_CODE_LEN = 256
       const MAX_DIST_LEN = 64
-      const DEMOS = [
-        '[[[[[[[[[[[[[[[FF]]]]]]]RRF[RRR]]]]]]C]]]',
-        '[[[[[FF]]]]]',
-        '[[[[[[[FF]]]]RCC]]]',
-        '[[[[[[[[[[[[[[F]]]]RCC]]]RR[FFF][RRR][FF]]]]]]]]',
-        'R[[[[[[[[[[[[[[FF]]]]]]]RRF[RRR]C]]]]]]]',
-        '[[[[[[[[[[[[FF]]]]RR]][[[FFF]]]RR[[F]][RRR]CC]]]]]]',
-        '[[[[[[[[[[[[[[[FF]]]]RR]][[[FFF]]]RR[[F]][RRR]CC]]]]]]R]]]',
-        '[[[[[[[[[[[[[[[FF]]]]C]]]RRF[RRR]F]]]]]]]]'
-      ]
+      const DEMOS = {
+        0: '[[[[[[[[[[[[[[[FF]]]]]]]RRF[RRR]]]]]]C]]]',
+        1: '[[[[[[[[[[[[[[[FF]]]]C]]]RRF[RRR]F]]]]]]]]',
+        2: 'R[[[[[[[[[[[[[[FF]]]]]]]RRF[RRR]C]]]]]]]',
+        3: '[[[[[[[[[[[[[[F]]]]RCC]]]RR[FFF][RRR][FF]]]]]]]]',
+        4: '[[[[[[[[[[[[FF]]]]RR]][[[FFF]]]RR[[F]][RRR]CC]]]]]]',
+        5: '[[[[[[[[[[[[[[[FF]]]]RR]][[[FFF]]]RR[[F]][RRR]CC]]]]]]R]]]',
+      }
 
       let startTime = null
       let canvas
@@ -130,11 +128,11 @@
         canvas.height = GRID_SIZE * SCALE
 
         // Initialize buttons.
+        buttonColor = document.getElementById('color')
         buttonForward = document.getElementById('forward')
         buttonRotate = document.getElementById('rotate')
         buttonBlock = document.getElementById('block')
         buttonRepeat = document.getElementById('repeat')
-        buttonColor = document.getElementById('color')
         buttonDelete = document.getElementById('delete')
         buttonHelp = document.getElementById('help')
         buttons = [buttonColor, buttonForward, buttonRotate,
@@ -155,11 +153,6 @@
         buttonHelp.addEventListener('click', actionHelp)
         window.addEventListener('hashchange', actionHash)
         window.addEventListener('resize', resize)
-
-        // Set up demos.
-        for (let i = 0; i < DEMOS.length; ++i) {
-          demos[i.toString()] = DEMOS[i]
-        }
 
         // Initialize input code and output.
         resize()
@@ -283,7 +276,7 @@
         }
 
         if (ops === 0) {
-          status.innerHTML = 'READY.  Type &lsquo;?&rsquo; anytime for help.'
+          status.innerHTML = 'READY.  Type &lsquo;?&rsquo; for help.'
         } else {
           const ms = Date.now() - startTime
           const rate = ms === 0 ? '-' : Math.round(10000 * ops / ms) / 10
@@ -347,7 +340,7 @@
       }
 
       function lookupDemo () {
-        const code = demos[text.value]
+        const code = DEMOS[text.value]
         if (typeof code !== 'undefined') {
           text.value = code
         }
@@ -611,8 +604,8 @@
         </li>
         <li>
           <p>
-            This software is available under the
-            <a href="https://github.com/susam/cfr/blob/main/LICENSE.md">MIT License</a>.
+            Visit <a href="https://susam.net/cfrs.html">susam.net/cfrs.html</a>
+            for CFRS[], an animated variant of CFR[].
           </p>
         </li>
       </ul>
@@ -620,7 +613,7 @@
     <pre id="status"></pre>
     <input id="text" inputmode="none" autofocus
            placeholder="Type code here.">
-    <div id="buttons">
+    <div>
       <button id="color" title="Change colour">C</button><!--
       --><button id="forward" title="Move forward and paint cell">F</button><!--
       --><button id="rotate" title="Rotate by 45&deg;">R</button><!--
