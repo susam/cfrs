@@ -16,11 +16,16 @@ bounded by `[` and `]` behaves like a loop that runs twice before the
 block exits.  See sections [Commands](#commands) and [Loops](#loops)
 for more details about this.
 
+CFR[] supports drawing static images only.  To draw dynamic images
+with animation effects, please see [CFRS[]](https://github.com/susam/cfrs)
+instead.
+
 [![Screenshot of CFR Brackets Colour Bars][IMG0]][DEMO0]
 
 **[See Demo][DEMO0]**
 
 **[Draw Now][DRAW1]**
+
 
 
 Contents
@@ -110,7 +115,7 @@ Demos
 -----
 
 The implementation in this project comes with a small collection of
-demos.  Type any digit between `0` and `7` to see the corresponding
+demos.  Type any digit between `0` and `5` to see the corresponding
 demo.  Typing a digit may require an external keyboard.  If there is
 no external keyboard available, append `#` and a digit to the page URL
 with an on-screen keyboard.  For example, the URL
@@ -123,10 +128,8 @@ Here are direct links to demos currently available:
 [#1](https://susam.net/cfr.html#1),
 [#2](https://susam.net/cfr.html#2),
 [#3](https://susam.net/cfr.html#3),
-[#4](https://susam.net/cfr.html#4),
-[#5](https://susam.net/cfr.html#5),
-[#6](https://susam.net/cfr.html#6), and
-[#7](https://susam.net/cfr.html#7).
+[#4](https://susam.net/cfr.html#4), and
+[#5](https://susam.net/cfr.html#5).
 
 If you have an interesting demo that fits in 64 bytes of code, please
 [create an issue][ISSUES] and share it.  If the demo looks very
@@ -354,6 +357,9 @@ See [Andromeda Invaders](https://github.com/susam/invaders), a
 
 See [PC Face](https://github.com/susam/pcface), a collection of bitmap
 arrays for rendering CP437 glyphs using IBM PC OEM fonts.
+
+See [CFRS[]](https://github.com/susam/cfrs), an extension of CFR[]
+that supports animation effects with the `S` (sleep) command.
 
 <!--
 Release Checklist
