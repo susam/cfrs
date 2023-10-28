@@ -12,6 +12,7 @@ Changelog
 ### Fixed
 
 - Do not alter browser history while embedding code in the URL.
+- Remove vertical scrollbar from status panel.
 
 
 0.2.0 (2023-10-21)
