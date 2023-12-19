@@ -6,7 +6,8 @@ Changelog
 
 ### Changed
 
-- Input field applies text-transform to display code in uppercase.
+- Apply text-transform to input field to display code in uppercase.
+- Fix the number of decimal places for duration and rate in the status panel.
 
 
 0.3.0 (2023-10-28)
