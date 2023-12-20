@@ -1,5 +1,5 @@
 <!--
-  CFR Brackets 0.3.0
+  CFR Brackets 0.4.0
   Copyright (c) 2023 Susam Pal
   Source: https://github.com/susam/cfr
   License: MIT
@@ -284,7 +284,7 @@
           const ms = Date.now() - startTime
           const bytes = text.value.length + (text.value.length === 1 ? ' byte' : ' bytes')
           const opss = ops + (ops === 1 ? ' op' : ' ops')
-                     const duration = (ms / 1000).toFixed(3) + ' s'
+          const duration = (ms / 1000).toFixed(3) + ' s'
           const rate = (ms === 0 ? '-' : (1000 * ops / ms).toFixed(1)) + ' ops/s'
           const msg = bytes + ', ' + opss + ', ' + duration + ', ' + rate
           status.innerHTML = msg
