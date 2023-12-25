@@ -1,6 +1,6 @@
 {
   "name": "cfrs",
-  "version": "0.2.0",
+  "version": "0.1.0",
   "description": "CFRS Brackets: An extremely minimal drawing language consisting of only 5 simple commands: C, F, R, [, and ]",
   "main": "cfrs.html",
   "files": [
