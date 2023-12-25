@@ -31,6 +31,8 @@ Contents
 * [Implementation](#implementation)
 * [Get Started](#get-started)
 * [Demos](#demos)
+  * [Built-In Demos](#built-in-demos)
+  * [Community Demos](#community-demos)
 * [Canvas](#canvas)
 * [Turtle](#turtle)
 * [Commands](#commands)
@@ -117,6 +119,8 @@ The maximum code length supported is 256 bytes.
 Demos
 -----
 
+### Built-In Demos
+
 The implementation in this project comes with a small collection of
 demos.  Type any digit between `0` and `5` to see the corresponding
 demo.  Typing a digit may require an external keyboard.  If there is
@@ -134,9 +138,17 @@ Here are direct links to demos currently available:
 [#4](https://susam.net/cfrs.html#4), and
 [#5](https://susam.net/cfrs.html#5).
 
+
+### Community Demos
+
+A few community members have created several interesting and
+impressive demos.  These demos can be found at [demo.md][].
+
 If you have an interesting demo that fits in 64 bytes of code, please
 [create an issue][ISSUES] and share it.  If the demo looks very
-interesting, it may be included in the above list of available demos.
+interesting, it may be added to [demo.md][].
+
+[demo.md]: demo.md
 
 
 Canvas
