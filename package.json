@@ -1,21 +1,21 @@
 {
-  "name": "cfr",
-  "version": "0.4.0",
-  "description": "CFR Brackets: An extremely minimal drawing language consisting of only 5 simple commands: C, F, R, [, and ]",
-  "main": "cfr.html",
+  "name": "cfrs",
+  "version": "0.2.0",
+  "description": "CFRS Brackets: An extremely minimal drawing language consisting of only 5 simple commands: C, F, R, [, and ]",
+  "main": "cfrs.html",
   "files": [
-    "cfr.html"
+    "cfrs.html"
   ],
   "keywords": [
     "game",
     "graphics",
     "browser"
   ],
-  "homepage": "https://github.com/susam/cfr",
-  "bugs": "https://github.com/susam/cfr/issues",
+  "homepage": "https://github.com/susam/cfrs",
+  "bugs": "https://github.com/susam/cfrs/issues",
   "license": "MIT",
   "author": "Susam Pal (https://susam.net/)",
-  "repository": "github:susam/cfr",
+  "repository": "github:susam/cfrs",
   "devDependencies": {
     "standard": "latest",
     "eslint-plugin-html": "latest"

@@ -1,15 +1,15 @@
 <!--
-  CFR Brackets 0.4.0
+  CFRS[] 0.2.0
   Copyright (c) 2023 Susam Pal
-  Source: https://github.com/susam/cfr
+  Source: https://github.com/susam/cfrs
   License: MIT
 -->
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>CFR[]</title>
+    <title>CFRS[]</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="An extremely minimal drawing language consisting of only five simple commands: C, F, R, [, and ].">
+    <meta name="description" content="An extremely minimal drawing and animation language consisting of only six simple commands: C, F, R, S, [, and ].">
     <style>
       body {
         background: #111;
@@ -84,18 +84,19 @@
       const COLORS = ['#000', '#36f', '#0c0', '#0cc',
         '#c00', '#c0c', '#cc0', '#ccc']
       const GRID_SIZE = 256
+      const SLEEP_INTERVAL = 20
       const SCALE = 4
       const PADDING = 8
       const PANEL_HEIGHT = 40
       const MAX_CODE_LEN = 256
       const MAX_DIST_LEN = 64
       const DEMOS = {
-        0: '[[[[[[[[[[[[[[[FF]]]]]]]RRF[RRR]]]]]]C]]]',
-        1: '[[[[[[[[[[[[[[[FF]]]]C]]]RRF[RRR]F]]]]]]]]',
-        2: 'R[[[[[[[[[[[[[[FF]]]]]]]RRF[RRR]C]]]]]]]',
-        3: '[[[[[[[[[[[[[[F]]]]RCC]]]RR[FFF][RRR][FF]]]]]]]]',
-        4: '[[[[[[[[[[[[FF]]]]RR]][[[FFF]]]RR[[F]][RRR]CC]]]]]]',
-        5: '[[[[[[[[[[[[[[[FF]]]]RR]][[[FFF]]]RR[[F]][RRR]CC]]]]]]R]]]'
+        0: '[[[[[[[[[[[[[[[FF]]]]]]]SRRF[RRR]]]]]]C]]]',
+        1: '[[[[[[[[[[[[[[[FF]]]]C]]]SRRF[RRR]F]]]]]]]]',
+        2: 'R[[[[[[[[[[[[[[FF]]]]]]]RRF[RRR]SC]]]]]]]',
+        3: '[[[[[[[[[[[[[[F]]]]RCC]]]SRR[FFF][RRR][FF]]]]]]]]',
+        4: '[[[[[[[[[[[[FF]]]]RR]][[[FFF]]]SRR[[F]][RRR]CC]]]]]]',
+        5: '[[[[[[[[[[[[[[[FF]]]]RR]][[[FFF]]]RR[[F]][RRR]CC]]S]]]]R]]]'
       }
 
       let startTime = null
@@ -109,6 +110,7 @@
       let buttonColor
       let buttonForward
       let buttonRotate
+      let buttonSleep
       let buttonBlock
       let buttonRepeat
       let buttonDelete
@@ -134,11 +136,12 @@
         buttonColor = document.getElementById('color')
         buttonForward = document.getElementById('forward')
         buttonRotate = document.getElementById('rotate')
+        buttonSleep = document.getElementById('sleep')
         buttonBlock = document.getElementById('block')
         buttonRepeat = document.getElementById('repeat')
         buttonDelete = document.getElementById('delete')
         buttonHelp = document.getElementById('help')
-        buttons = [buttonColor, buttonForward, buttonRotate,
+        buttons = [buttonColor, buttonForward, buttonRotate, buttonSleep,
           buttonBlock, buttonRepeat, buttonDelete, buttonHelp]
 
         // Add event listeners for text.
@@ -152,6 +155,7 @@
         buttonRotate.addEventListener('click', actionRotate)
         buttonBlock.addEventListener('click', actionBlock)
         buttonRepeat.addEventListener('click', actionRepeat)
+        buttonSleep.addEventListener('click', actionSleep)
         buttonDelete.addEventListener('click', actionDelete)
         buttonHelp.addEventListener('click', actionHelp)
         window.addEventListener('hashchange', actionHash)
@@ -167,7 +171,7 @@
       function resize () {
         document.body.style.padding = PADDING + 'px'
         const availableWidth = window.innerWidth - 2 * PADDING
-        const availableHeight = window.innerHeight - 3 * PANEL_HEIGHT - 5 * PADDING
+        const availableHeight = window.innerHeight - 2 * PANEL_HEIGHT - 4 * PADDING
 
         // Resize canvas.
         canvasSize = Math.floor(Math.min(availableWidth, availableHeight))
@@ -188,14 +192,15 @@
         text.style.marginTop = PADDING + 'px'
 
         // Resize buttons.
+        const buttonsInRow = buttons.length / 2
         const buttonWidth = Math.floor(
-          (canvasSize - (buttons.length - 1) * PADDING) / buttons.length)
+          (canvasSize - (buttonsInRow - 1) * PADDING) / buttonsInRow)
         for (let i = 0; i < buttons.length; ++i) {
           const button = buttons[i]
           button.style.marginTop = PADDING + 'px'
           button.style.width = buttonWidth + 'px'
           button.style.height = PANEL_HEIGHT + 'px'
-          button.style.marginLeft = (i === 0 ? 0 : PADDING) + 'px'
+          button.style.marginLeft = (i % buttonsInRow === 0 ? 0 : PADDING) + 'px'
         }
         log('resized: canvas: ' + canvasSize + '; button: ' + buttonWidth)
       }
@@ -207,90 +212,127 @@
         }
         clearHelp()
         log('draw', text.value)
+        stopLooper()
         ctx.fillStyle = COLORS[0]
         ctx.fillRect(0, 0, GRID_SIZE * SCALE, GRID_SIZE * SCALE)
-        evaluate(text.value)
+        evaluate()
         prevText = text.value
         log('draw complete')
       }
 
-      function evaluate (code) {
-        let x = Math.floor((GRID_SIZE - 1) / 2)
-        let y = Math.floor((GRID_SIZE - 1) / 2)
-        let color = 7
-        let heading = 0
-        let ops = 0
-        let idx = 0
-        const stack = []
+      let idx
+      let x
+      let y
+      let color
+      let heading
+      let ops
+      let stack
+      let looperTimer = null
+      let lastUpdate = 0
 
+      function evaluate () {
+        x = Math.floor((GRID_SIZE - 1) / 2)
+        y = Math.floor((GRID_SIZE - 1) / 2)
+        color = 7
+        heading = 0
+        ops = 0
+        idx = 0
+        stack = []
         startTime = Date.now()
         logOp(ops, '-', idx, 'BEGIN', color, x, y, heading)
-
-        if (code.length > MAX_CODE_LEN) {
-          error('Code contains ' + code.length + ' bytes; must not exceed ' +
-                MAX_CODE_LEN)
+        if (text.value.length > MAX_CODE_LEN) {
+          error('Code contains ' + text.value.length +
+                ' bytes; must not exceed ' + MAX_CODE_LEN)
           return
         }
+        looper()
+      }
 
-        while (idx < code.length) {
-          const execIdx = idx
-          const op = code.charAt(idx)
-          if (op === 'C') {
-            color = (color + 1) % COLORS.length
-            ++idx
-          } else if (op === 'F') {
-            if (heading === 1 || heading === 2 || heading === 3) {
-              x = (x + 1) % GRID_SIZE
-            } else if (heading === 5 || heading === 6 || heading === 7) {
-              x = (x - 1 + GRID_SIZE) % GRID_SIZE
-            }
-            if (heading === 7 || heading === 0 || heading === 1) {
-              y = (y - 1 + GRID_SIZE) % GRID_SIZE
-            } else if (heading === 3 || heading === 4 || heading === 5) {
-              y = (y + 1) % GRID_SIZE
-            }
-            ctx.fillStyle = COLORS[color]
-            ctx.fillRect(x * SCALE, y * SCALE, SCALE, SCALE)
-            ++idx
-          } else if (op === 'R') {
-            heading = (heading + 1) % 8
-            ++idx
-          } else if (op === '[') {
-            stack.push([idx + 1, 1])
-            ++idx
-          } else if (op === ']') {
-            if (stack.length === 0) {
-              error('Unexpected &lsquo;]&rsquo;')
-              return
-            }
-            const [jmpIdx, count] = stack.pop()
-            if (count !== 0) {
-              stack.push([jmpIdx, count - 1])
-              idx = jmpIdx
-            } else {
-              ++idx
-            }
-          } else {
-            error('Unknown operation')
-            return
-          }
-          logOp(ops, execIdx, idx, op, color, x, y, heading)
-          ++ops
+      function looper () {
+        looperTimer = null
+        let loop = true
+        while (loop && idx < text.value.length) {
+          loop = iterate()
         }
-
+        if (loop === null) {
+          return
+        }
+        if (idx < text.value.length) {
+          looperTimer = window.setTimeout(looper, SLEEP_INTERVAL)
+        }
         if (ops === 0) {
           status.innerHTML = 'READY.  Type &lsquo;?&rsquo; for help.'
         } else {
-          const ms = Date.now() - startTime
-          const bytes = text.value.length + (text.value.length === 1 ? ' byte' : ' bytes')
-          const opss = ops + (ops === 1 ? ' op' : ' ops')
-          const duration = (ms / 1000).toFixed(3) + ' s'
-          const rate = (ms === 0 ? '-' : (1000 * ops / ms).toFixed(1)) + ' ops/s'
-          const msg = bytes + ', ' + opss + ', ' + duration + ', ' + rate
-          status.innerHTML = msg
+          const now = Date.now()
+          if (now - lastUpdate > 100 || idx === text.value.length) {
+            const ms = now - startTime
+            const bytes = text.value.length + (text.value.length === 1 ? ' byte' : ' bytes')
+            const opss = ops + (ops === 1 ? ' op' : ' ops')
+            const duration = (ms / 1000).toFixed(3) + ' s'
+            const rate = (ms === 0 ? '-' : (1000 * ops / ms).toFixed(1)) + ' ops/s'
+            const msg = bytes + ', ' + opss + ', ' + duration + ', ' + rate
+            status.innerHTML = msg
+            lastUpdate = now
+          }
         }
+      }
 
-        logOp(ops, '-', idx, 'END', color, x, y, heading)
+      function stopLooper () {
+        if (looperTimer !== null) {
+          window.clearTimeout(looperTimer)
+          looperTimer = null
+        }
+      }
+
+      function iterate () {
+        const execIdx = idx
+        const op = text.value.charAt(idx)
+        let loop = true
+        if (op === 'C') {
+          color = (color + 1) % COLORS.length
+          ++idx
+        } else if (op === 'F') {
+          if (heading === 1 || heading === 2 || heading === 3) {
+            x = (x + 1) % GRID_SIZE
+          } else if (heading === 5 || heading === 6 || heading === 7) {
+            x = (x - 1 + GRID_SIZE) % GRID_SIZE
+          }
+          if (heading === 7 || heading === 0 || heading === 1) {
+            y = (y - 1 + GRID_SIZE) % GRID_SIZE
+          } else if (heading === 3 || heading === 4 || heading === 5) {
+            y = (y + 1) % GRID_SIZE
+          }
+          ctx.fillStyle = COLORS[color]
+          ctx.fillRect(x * SCALE, y * SCALE, SCALE, SCALE)
+          ++idx
+        } else if (op === 'R') {
+          heading = (heading + 1) % 8
+          ++idx
+        } else if (op === 'S') {
+          loop = false
+          ++idx
+        } else if (op === '[') {
+          stack.push([idx + 1, 1])
+          ++idx
+        } else if (op === ']') {
+          if (stack.length === 0) {
+            error('Unexpected &lsquo;]&rsquo;')
+            return null
+          }
+          const [jmpIdx, count] = stack.pop()
+          if (count !== 0) {
+            stack.push([jmpIdx, count - 1])
+            idx = jmpIdx
+          } else {
+            ++idx
+          }
+        } else {
+          error('Unknown operation')
+          return null
+        }
+        logOp(ops, execIdx, idx, op, color, x, y, heading)
+        ++ops
+        return loop
       }
 
       function error (msg) {
@@ -329,7 +371,7 @@
 
       function actionKey (e) {
         if (e.key !== 'Shift') {
-          setTimeout(normalizeDraw, 10)
+          window.setTimeout(normalizeDraw, 10)
         }
       }
 
@@ -381,6 +423,12 @@
         draw()
       }
 
+      function actionSleep (e) {
+        e.preventDefault()
+        insertText('S')
+        draw()
+      }
+
       function actionDelete (e) {
         e.preventDefault()
         deleteText()
@@ -395,6 +443,7 @@
 
       function toggleHelp () {
         if (info.style.display === 'none') {
+          stopLooper()
           canvas.style.display = 'none'
           info.style.display = 'block'
           buttonHelp.title = 'Hide help'
@@ -450,7 +499,7 @@
         let result = ''
         for (let i = 0; i < text.value.length; ++i) {
           const ch = text.value.charAt(i).toUpperCase()
-          if (ch === 'C' || ch === 'F' || ch === 'R' ||
+          if (ch === 'C' || ch === 'F' || ch === 'R' || ch === 'S' ||
               ch === '[' || ch === ']') {
             result += ch
             continue
@@ -568,6 +617,11 @@
         </li>
         <li>
           <p>
+            <strong>S</strong> - Sleep for 20 ms.
+          </p>
+        </li>
+        <li>
+          <p>
             <strong>[</strong> - Begin a repeatable block and continue
             executing subsequent code normally.
           </p>
@@ -576,7 +630,7 @@
           <p>
             <strong>]</strong> - Go back to the beginning of the
             current repeatable block, repeat it once more, and exit
-            the block. &nbsp;A block bounded by
+            the block. A block bounded by
             &lsquo;<strong>[</strong>&rsquo; and
             &lsquo;<strong>]</strong>&rsquo; behaves like a loop that
             runs twice before the block exits.
@@ -586,51 +640,56 @@
       <ul>
         <li>
           <p>
-            <strong>[FFF]</strong> - Draw a column of 6 white cells.
+            <strong>[FFF]</strong> - A column of 6 white cells.
           </p>
         </li>
         <li>
           <p>
-            <strong>CC[[FFF]]</strong> - Draw a column of 12 blue cells.
+            <strong>CC[[[[[[FS]]]]]]</strong> - A gradually rising
+            column of 64 cells.
           </p>
         </li>
         <li>
           <p>
-            <strong>CCC[[[[[FFF]]R]]]</strong> - Draw a green octagon.
+            <strong>[[[[[[[[FFF]]R]]][[[SSS]]]CC]]]</strong> - An
+            octagon that changes colours 8 times.
+          </p>
         </li>
       </ul>
       <p><strong>MORE</strong></p>
       <ul>
         <li>
           <p>
-            Visit <a href="https://github.com/susam/cfr">github.com/susam/cfr</a>
+            Visit <a href="https://github.com/susam/cfrs">github.com/susam/cfrs</a>
             for complete information.
           </p>
         </li>
         <li>
           <p>
-            Visit <a href="https://susam.net/cfrs.html">susam.net/cfrs.html</a>
-            for animation effects.
+            Visit <a href="https://susam.net/cfr.html">susam.net/cfr.html</a>
+            for CFR[], a purely static variant of CFRS[].
           </p>
         </li>
       </ul>
     </section>
     <pre id="status"></pre>
-    <input id="text" inputmode="none" autofocus
-           placeholder="Type code here.">
-    <div>
+    <input id="text" inputmode="none" autofocus placeholder="Type code here.">
+    <div id="buttons">
       <button id="color" title="Change colour">C</button><!--
       --><button id="forward" title="Move forward and paint cell">F</button><!--
       --><button id="rotate" title="Rotate by 45&deg;">R</button><!--
-      --><button id="block" title="Begin block">[</button><!--
+      --><button id="sleep" title="Sleep for 20 ms">S</button>
+    </div>
+    <div id="buttons">
+      <button id="block" title="Begin block">[</button><!--
       --><button id="repeat" title="Repeat block once">]</button><!--
       --><button id="delete" title="Delete command">&larr;</button><!--
       --><button id="help" title="Show help">?</button>
     </div>
     <footer>
-      <a href="https://github.com/susam/cfr">GitHub</a>
+      <a href="https://github.com/susam/cfrs">GitHub</a>
       <a href="https://mastodon.social/@susam">Mastodon</a>
-      <a href="https://susam.net/cfrs.html">CFRS[]</a>
+      <a href="https://twitter.com/susam">Twitter</a>
     </footer>
   </body>
 </html>

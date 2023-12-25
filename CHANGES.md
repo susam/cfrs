@@ -1,6 +1,17 @@
 Changelog
 =========
 
+0.5.0 (2023-12-25)
+------------------
+
+### Changed
+
+- Merge CFRS[] and CFR[] into a single project thus making the `S`
+  command part of this project.
+- Rename this project from CFR[] to CFRS[].
+- Move input buttons below the fold on a wide display.
+
+
 0.4.0 (2023-12-20)
 ------------------
 
