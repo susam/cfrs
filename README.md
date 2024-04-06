@@ -9,13 +9,13 @@ consists of only six simple commands:
 - `R`: Rotate right (clockwise) by 45°.
 - `S`: Sleep for 20 ms.
 - `[`: Begin a repeatable block and continue executing subsequent code.
-- `]`: Repeat current repeatable block once more and exit the block.
+- `]`: Repeat the current block and exit the block.
 
 Note that `]` goes back to the beginning of the current repeatable
-block, repeats it once more, and exits the block.  Thus a block
-bounded by `[` and `]` behaves like a loop that runs twice before the
-block exits.  See sections [Commands](#commands) and [Loops](#loops)
-for more details about this.
+block, executes it again, and exits the block.  Thus a block bounded
+by `[` and `]` behaves like a loop that runs twice before the block
+exits.  See sections [Commands](#commands) and [Loops](#loops) for
+more details about this.
 
 [![Screenshot of CFRS Brackets Colour Bars][IMG0]][DEMO0]
 
@@ -272,7 +272,7 @@ after `[` continues as usual.
 
 The `]` command marks the end of a repeatable block.  When the
 evaluator reads `]`, it jumps back to the beginning of the current
-repeatable block, repeats it once more, and exits the block.  As a
+repeatable block, executes it again, and exits the block.  As a
 result, when the code evaluator enters a block marked with `[`, the
 block is executed twice before the evaluator leaves the end of the
 block marked with `]`.
@@ -290,9 +290,9 @@ The following code moves the turtle twice and then rotates it once:
 The opening square bracket (`[`) marks the beginning of a block.  Then
 `F` is executed as usual thereby moving the turtle forward once.  Then
 the closing square bracket (`]`) repeats the current block thereby
-executing the `F` inside the block once more.  Finally the evaluator
-moves ahead to `R` and rotates the turtle once.  Note that the
-evaluator leaves a block after the block has been repeated twice.
+executing the `F` inside the block again.  Finally the evaluator moves
+ahead to `R` and rotates the turtle once.  Note that the evaluator
+leaves a block after the block has been executed twice.
 
 The following code moves the turtle 6 times:
 
