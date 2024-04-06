@@ -1,6 +1,20 @@
 Changelog
 =========
 
+0.1.1 (2024-04-06)
+------------------
+
+### Added
+
+- Add links to built-in demos in the built-in help.
+- Add link to community demos in the built-in help.
+
+
+### Changed
+
+- Clarify repeatable blocks with clearer language.
+
+
 0.1.0 (2023-12-25)
 ------------------
 
