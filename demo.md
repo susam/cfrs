@@ -25,8 +25,58 @@ interesting, it may be added to this document.
 Contents
 --------
 
-* [Static Demos](#static-demos)
 * [Dynamic Demos](#dynamic-demos)
+* [Static Demos](#static-demos)
+
+
+Dynamic Demos
+-------------
+
+Dynamic demos contain the `S` command which makes the turtle sleep for
+20 ms.  This is often used to produce animation or dynamic effects in
+the demo.  The following list presents a collection of dynamic demos
+created by various community members.
+
+ 1. Crosses by [btknu][] (27 Oct 2023).
+
+    ```
+    [[[[[[FFCF[[RRRRRRR[[[F]]S]]FFFFRRRRF]CCCCCCCRRRFFF]]]R]]]
+    ```
+
+    <https://susam.net/cfrs.html#B6F2CFB2R7B3FE2SE2F4R4FEC7R3F3E3RE3>
+
+ 2. Leaf by [btknu][] (27 Oct 2023).
+
+    ```
+    C[[[[R[R[R[[[F]S]RCFCCCCFCCFFCFFFFFFRRRRRRR]FFCCCC]CCCCFR]]]]
+    ```
+
+    <https://susam.net/cfrs.html#CB4RBRBRB3FESERCFC4FC2F2CF6R7EF2C4EC4FRE4>
+
+ 3. Kaleidoscope by [btknu][] (27 Oct 2023).
+
+    ```
+    C[[[[[[[[[R[S[[[F]]CFFCCFFCCFCCCFFFFFFF]]]R]]R]RRFR]]]FRR]FFRR]
+    ```
+
+    <https://susam.net/cfrs.html#CB9RBSB3FE2CF2C2F2C2FC3F7E3RE2RER2FRE3FR2EF2R2E>
+
+ 4. Alien Flower by [btknu][] (27 Oct 2023).
+
+    ```
+    [[[RRR[R[R[[CC[[F]S]CCCCCCR]RRRRRR]FF]FR]CCCCCCC[[[FSFFR]]]C]]]
+    ```
+
+    <https://susam.net/cfrs.html#B3R3BRBRB2C2B2FESEC6RER6EF2EFREC7B3FSF2RE3CE3>
+
+
+ 5. Rectangular Rush by [wong-justin][] (22 Aug 2024).
+
+    ```
+    R[[[[[[[[[[[[[[[[[[[[[[[[FF]]]]]]]RRF[RRR]]]S]]C]]]RRC]]]]]]]]]]
+    ```
+
+    <https://susam.net/cfrs.html#RB24F2E7R2FBR3E3SE2CE3R2CE10>
 
 
 Static Demos
@@ -145,56 +195,6 @@ CFRS[] artist coders!
     ```
 
     <https://susam.net/cfrs.html#B10F2R2FBR3E2FR2FB2R3EFR2F2EF2EF4R4E7F4R4E>
-
-
-Dynamic Demos
--------------
-
-Dynamic demos contain the `S` command which makes the turtle sleep for
-20 ms.  This is often used to produce animation or dynamic effects in
-the demo.  The following list presents a collection of dynamic demos
-created by various community members.
-
- 1. Crosses by [btknu][] (27 Oct 2023).
-
-    ```
-    [[[[[[FFCF[[RRRRRRR[[[F]]S]]FFFFRRRRF]CCCCCCCRRRFFF]]]R]]]
-    ```
-
-    <https://susam.net/cfrs.html#B6F2CFB2R7B3FE2SE2F4R4FEC7R3F3E3RE3>
-
- 2. Leaf by [btknu][] (27 Oct 2023).
-
-    ```
-    C[[[[R[R[R[[[F]S]RCFCCCCFCCFFCFFFFFFRRRRRRR]FFCCCC]CCCCFR]]]]
-    ```
-
-    <https://susam.net/cfrs.html#CB4RBRBRB3FESERCFC4FC2F2CF6R7EF2C4EC4FRE4>
-
- 3. Kaleidoscope by [btknu][] (27 Oct 2023).
-
-    ```
-    C[[[[[[[[[R[S[[[F]]CFFCCFFCCFCCCFFFFFFF]]]R]]R]RRFR]]]FRR]FFRR]
-    ```
-
-    <https://susam.net/cfrs.html#CB9RBSB3FE2CF2C2F2C2FC3F7E3RE2RER2FRE3FR2EF2R2E>
-
- 4. Alien Flower by [btknu][] (27 Oct 2023).
-
-    ```
-    [[[RRR[R[R[[CC[[F]S]CCCCCCR]RRRRRR]FF]FR]CCCCCCC[[[FSFFR]]]C]]]
-    ```
-
-    <https://susam.net/cfrs.html#B3R3BRBRB2C2B2FESEC6RER6EF2EFREC7B3FSF2RE3CE3>
-
-
- 5. Rectangular Rush by [wong-justin][] (22 Aug 2024).
-
-    ```
-    R[[[[[[[[[[[[[[[[[[[[[[[[FF]]]]]]]RRF[RRR]]]S]]C]]]RRC]]]]]]]]]]
-    ```
-
-    <https://susam.net/cfrs.html#RB24F2E7R2FBR3E3SE2CE3R2CE10>
 
 
 <!-- Authors -->
