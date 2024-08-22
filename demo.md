@@ -130,13 +130,21 @@ CFRS[] artist coders!
 
     <https://susam.net/cfrs.html#B17F2E6BRE3BF2E5R2E2RE3>
 
-12. Carpet by [aartaka][] (10 MAY 2024).
+12. Carpet by [aartaka][] (10 May 2024).
 
     ```
     [[[[[[[[[[[CFFRRFFRRFRRRRRRFF]RRRR]RR]RRRR]RR]RRR]RRR]RRR]RRR]]]
     ```
 
     <https://susam.net/cfrs.html#B11CF2R2F2R2FR6F2ER4ER2ER4ER2ER3ER3ER3ER3E3>
+
+13. Circles by [wong-justin][] (22 Aug 2024).
+
+    ```
+    [[[[[[[[[[FFRRF[RRR]]FRRF[[RRR]FRRFF]FF]FFFFRRRR]]]]]]]FFFFRRRR]
+    ```
+
+    <https://susam.net/cfrs.html#B10F2R2FBR3E2FR2FB2R3EFR2F2EF2EF4R4E7F4R4E>
 
 
 Dynamic Demos
@@ -180,7 +188,18 @@ created by various community members.
     <https://susam.net/cfrs.html#B3R3BRBRB2C2B2FESEC6RER6EF2EFREC7B3FSF2RE3CE3>
 
 
+ 5. Rectangular Rush by [wong-justin][] (22 Aug 2024).
+
+    ```
+    R[[[[[[[[[[[[[[[[[[[[[[[[FF]]]]]]]RRF[RRR]]]S]]C]]]RRC]]]]]]]]]]
+    ```
+
+    <https://susam.net/cfrs.html#RB24F2E7R2FBR3E3SE2CE3R2CE10>
+
+
 <!-- Authors -->
 
 [btknu]: https://github.com/btknu
 [MystPi]: https://github.com/MystPi
+[aartaka]: https://github.com/aartaka
+[wong-justin]: https://github.com/wong-justin
