@@ -67,10 +67,6 @@ the following links:
 * [susam.net/cfrs.html][DRAW1]
 * [susam.github.io/cfrs.html][DRAW2]
 
-A testing version with recent bug fixes is available here:
-
-* [susam.github.io/cfrs/cfrs.html][DRAW3]
-
 [DRAW1]: https://susam.net/cfrs.html
 [DRAW2]: https://susam.github.io/cfrs.html
 [DRAW3]: https://susam.github.io/cfrs/cfrs.html
