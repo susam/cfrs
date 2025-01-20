@@ -138,13 +138,13 @@ Here are direct links to demos currently available:
 ### Community Demos
 
 A few community members have created several interesting and
-impressive demos.  These demos can be found at [demo.md][].
+impressive demos.  These demos can be found at [demo.html][].
 
 If you have an interesting demo that fits in 64 bytes of code, please
 [create an issue][ISSUES] and share it.  If the demo looks very
-interesting, it may be added to [demo.md][].
+interesting, it may be added to [demo.html][].
 
-[demo.md]: demo.md
+[demo.html]: https://susam.github.io/demo.html
 
 
 Canvas

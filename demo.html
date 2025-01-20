@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>CFRS[] Community Demos</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#333">
+  <style>
+    body {
+      background: #111;
+      color: #bbb;
+      font-family: georgia, serif;
+      font-size: large;
+      line-height: 1.5;
+      margin: 0 auto;
+      max-width: 40em;
+      padding: 0 1em;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin: 2em 0 0.25em 0;
+      line-height: 1.2;
+    }
+    h1 + div {
+      margin: 0.5em 0;
+    }
+    a:link {
+      color: #9bf;
+    }
+    a:visited {
+      color: #a9f;
+    }
+    a:focus, a:hover {
+      color: #9cf;
+    }
+    a:active {
+      color: #f99;
+    }
+    a:empty:before {
+      content: "#";
+    }
+    a:empty {
+      visibility: hidden;
+      padding-left: 0.25em;
+    }
+    :hover > a {
+      visibility: visible;
+    }
+    pre {
+      background: #000;
+      box-shadow: 0 0 0.5em #333;
+      overflow: auto;
+      padding: 0.5em;
+    }
+    pre, code {
+      color: #9c6;
+      font-family: monospace,monospace;
+    }
+    hr {
+      margin: 1.5em auto;
+      border: 0;
+      border-bottom: 0.15em dotted #666;
+    }
+    footer {
+      text-align: center;
+    }
+    nav a {
+      margin-right: 1.5em;
+      line-height: 2.5;
+    }
+    nav a:last-child  {
+      margin-right: 0;
+    }
+  </style>
+</head>
+<body>
+<main>
+<h1>CFRS[] Community Demos</h1>
+<p>
+  This page contains a collection of CFRS[] demos contributed by
+  community members.  CFRS[] is an extremely minimal drawing language that
+  consists of only six simple commands:
+  <code>C</code>, <code>F</code>,
+  <code>R</code>, <code>S</code>, <code>[</code>, and <code>]</code>.
+</p>
+<p>
+  To learn more about CFRS[], visit
+  <a href="https://susam.net/cfrs.html">susam.net/cfrs.html</a> or
+  read the manual
+  at <a href="https://github.com/susam/cfrs#readme">github.com/susam/cfrs</a>.
+</p>
+<p>
+  If you create an interesting demo that fits in 64 bytes of code,
+  please <a href="https://github.com/susam/cfrs/issues">create a new
+  post here</a> and share it with the community.  If the demo looks
+  interesting, it may be added to this page
+</p>
+<h2 id="contents">Contents</h2>
+<ul>
+  <li>
+    <a href="#dynamic-demos">Dynamic Demos</a>
+    <ul>
+      <li><a href="#alien-flower">Alien Flower</a></li>
+      <li><a href="#crosses">Crosses</a></li>
+      <li><a href="#kaleidoscope">Kaleidoscope</a></li>
+      <li><a href="#leaf">Leaf</a></li>
+      <li><a href="#rectangular-rush">Rectangular Rush</a></li>
+    </ul>
+  </li>
+  <li>
+    <a href="#static-demos">Static Demos</a>
+    <ul>
+      <li><a href="#chequered-pattern">Chequered Pattern</a></li>
+      <li><a href="#diamond-pattern">Diamond Pattern</a></li>
+      <li><a href="#bonds">Bonds</a></li>
+      <li><a href="#pipes">Pipes</a></li>
+      <li><a href="#spokes">Spokes</a></li>
+      <li><a href="#lattice-wall">Lattice Wall</a></li>
+      <li><a href="#square-petals">Square Petals</a></li>
+      <li><a href="#windmills">Windmills</a></li>
+      <li><a href="#shaded-parallelograms">Shaded Parallelograms</a></li>
+      <li><a href="#diamond-mat">Diamond Mat</a></li>
+      <li><a href="#grey-motif">Grey Motif</a></li>
+      <li><a href="#turkish-carpet">Turkish Carpet</a></li>
+      <li><a href="#slanting-circles">Slanting Circles</a></li>
+    </ul>
+  </li>
+</ul>
+<h2 id="dynamic-demos">Dynamic Demos<a href="#dynamic-demos"></a></h2>
+<p>
+  Dynamic demos contain the <code>S</code> command which makes the
+  turtle sleep for 20 ms. This is often used to produce animation or
+  dynamic effects in the demo. The following subsections present a
+  collection of dynamic demos created by various community members.
+</p>
+
+<h3 id="alien-flower">Alien Flower<a href="#alien-flower"></a></h3>
+<p>Contributed by <a href="https://github.com/btknu">btknu</a> on 27 Oct 2023.</p>
+<pre><code>[[[RRR[R[R[[CC[[F]S]CCCCCCR]RRRRRR]FF]FR]CCCCCCC[[[FSFFR]]]C]]]</code></pre>
+<p><a href="https://susam.net/cfrs.html#B3R3BRBRB2C2B2FESEC6RER6EF2EFREC7B3FSF2RE3CE3">Run It</a></p>
+
+<h3 id="crosses">Crosses<a href="#crosses"></a></h3>
+<p>Contributed by <a href="https://github.com/btknu">btknu</a> on 27 Oct 2023.</p>
+<pre><code>[[[[[[FFCF[[RRRRRRR[[[F]]S]]FFFFRRRRF]CCCCCCCRRRFFF]]]R]]]</code></pre>
+<p><a href="https://susam.net/cfrs.html#B6F2CFB2R7B3FE2SE2F4R4FEC7R3F3E3RE3">Run It</a></p>
+
+<h3 id="kaleidoscope">Kaleidoscope<a href="#kaleidoscope"></a></h3>
+<p>Contributed by <a href="https://github.com/btknu">btknu</a> on 27 Oct 2023.</p>
+<pre><code>C[[[[[[[[[R[S[[[F]]CFFCCFFCCFCCCFFFFFFF]]]R]]R]RRFR]]]FRR]FFRR]</code></pre>
+<p><a href="https://susam.net/cfrs.html#CB9RBSB3FE2CF2C2F2C2FC3F7E3RE2RER2FRE3FR2EF2R2E">Run It</a></p>
+
+<h3 id="leaf">Leaf<a href="#leaf"></a></h3>
+<p>Contributed by <a href="https://github.com/btknu">btknu</a> on 27 Oct 2023.</p>
+<pre><code>C[[[[R[R[R[[[F]S]RCFCCCCFCCFFCFFFFFFRRRRRRR]FFCCCC]CCCCFR]]]]</code></pre>
+<p><a href="https://susam.net/cfrs.html#CB4RBRBRB3FESERCFC4FC2F2CF6R7EF2C4EC4FRE4">Run It</a></p>
+
+<h3 id="rectangular-rush">Rectangular Rush<a href="#rectangular-rush"></a></h3>
+<p>Contributed by <a href="https://github.com/wong-justin">Justin Wong</a> 22 Aug 2024.</p> <pre><code>R[[[[[[[[[[[[[[[[[[[[[[[[FF]]]]]]]RRF[RRR]]]S]]C]]]RRC]]]]]]]]]]</code></pre>
+<p><a href="https://susam.net/cfrs.html#RB24F2E7R2FBR3E3SE2CE3R2CE10">Run It</a></p>
+
+<h2 id="static-demos">Static Demos<a href="#static-demos"></a></h2>
+<p>
+  Static demos do not contain the <code>S</code> command that makes
+  the turtle sleep for 20 ms. As a result, the static demos are
+  rendered synchronously in a single stroke. The following subsections
+  present a collection of some nice static demos created by the
+  community of CFRS[] artists!
+</p>
+
+<h3 id="chequered-pattern">Chequered Pattern<a href="#chequered-pattern"></a></h3>
+<p>Contributed by <a href="https://github.com/btknu">btknu</a> on 22 Oct 2023.</p>
+<pre><code>[[[[[[[[[[[[[[FFCCFF]]]]]R[[[[[F][[[[FF]F]]]R]]R]]][C]]]RRRR]RR]</code></pre>
+<p><a href="https://susam.net/cfrs.html#B14F2C2F2E5RB5FEB4F2EFE3RE2RE3BCE3R4ER2E">Run It</a></p>
+
+<h3 id="diamond-pattern">Diamond Pattern<a href="#diamond-pattern"></a></h3>
+<p>Contributed by <a href="https://github.com/btknu">btknu</a> on 22 Oct 2023.</p>
+<pre><code>[[[R[[C[R[[FFFFFFFFFFFFFFFFF[[[R[[[[F]]]]][[[[F]]F]]]]R]]]R]]]]]</code></pre>
+<p><a href="https://susam.net/cfrs.html#B3RB2CBRB2F17B3RB4FE5B4FE2FE4RE3RE5">Run It</a></p>
+
+<h3 id="bonds">Bonds<a href="#bonds"></a></h3>
+<p>Contributed by <a href="https://github.com/btknu">btknu</a> on 22 Oct 2023.</p>
+<pre><code>[[[C[C[C[[[[[[[[[[F]]]]][[[R[[[[FFRFF]]]]]]]R][[R]]]]R]]]RF]]]]</code></pre>
+<p><a href="https://susam.net/cfrs.html#B3CBCBCB10FE5B3RB4F2RF2E7REB2RE4RE3RFE4">Run It</a></p>
+
+<h3 id="pipes">Pipes<a href="#pipes"></a></h3>
+<p>Contributed by <a href="https://github.com/btknu">btknu</a> on 22 Oct 2023.</p>
+<pre><code>[[C[[[[[[[[[[[[[[F]]]]]]]][[[FR[[[[F]]]]]]R][[R]]]]R]]]]RCFCR]]</code></pre>
+<p><a href="https://susam.net/cfrs.html#B2CB14FE8B3FRB4FE6REB2RE4RE4RCFCRE2">Run It</a></p>
+
+<h3 id="spokes">Spokes<a href="#spokes"></a></h3>
+<p>Contributed by <a href="https://github.com/btknu">btknu</a> on 22 Oct 2023.</p>
+<pre><code>[[[[[[[[[[[[[[[[F]]]]]]]][[[FR[[[[FRF]]]]]]R][[R]]]]R]]]]RCCF]]</code></pre>
+<p><a href="https://susam.net/cfrs.html#B16FE8B3FRB4FRFE6REB2RE4RE4RC2FE2">Run It</a></p>
+
+<h3 id="lattice-wall">Lattice Wall<a href="#lattice-wall"></a></h3>
+<p>Contributed by <a href="https://github.com/btknu">btknu</a> on 22 Oct 2023.</p>
+<pre><code>[[[[[[[[[[[[[[[[[F]]]]]]]]R]][[[[[[F]]]]]]]RF]]]F]]CC]</code></pre>
+<p><a href="https://susam.net/cfrs.html#B17FE8RE2B6FE7RFE3FE2C2E">Run It</a></p>
+
+<h3 id="square-petals">Square Petals<a href="#square-petals"></a></h3>
+<p>Contributed by <a href="https://github.com/btknu">btknu</a> on 22 Oct 2023.</p>
+<pre><code>[[[[[[[[[[[[[[[[[[[[[F]][[[RF]]]]]]]R]]]]]]R]]]R]C]RF]C]FR]</code></pre>
+<p>https://susam.net/cfrs.html#B21FE2B3RFE7RE6RE3RECERFECEFRE&gt;</p>
+
+<h3 id="windmills">Windmills<a href="#windmills"></a></h3>
+<p>Contributed by <a href="https://github.com/MystPi">MystPi</a> on 23 Oct 2023.</p>
+<pre><code>[[[[[[[[[[F]]]]R]]RR]]RRCC]]</code></pre>
+<p><a href="https://susam.net/cfrs.html#B10FE4RE2R2E2R2C2E2">Run It</a></p>
+
+<h3 id="shaded-parallelograms">Shaded Parallelograms<a href="#shaded-parallelograms"></a></h3>
+<p>Contributed by <a href="https://github.com/MystPi">MystPi</a> on 23 Oct 2023.</p>
+<pre><code>[[[[[[[[[[[F[[[F]]]]RRFRR[[[[F]]]][RRR]F[RRR]]]]R]]]RR]]</code></pre>
+<p><a href="https://susam.net/cfrs.html#B11FB3FE4R2FR2B4FE4BR3EFBR3E4RE3R2E2">Run It</a></p>
+
+<h3 id="diamond-mat">Diamond Mat<a href="#diamond-mat"></a></h3>
+<p>Contributed by <a href="https://github.com/btknu">btknu</a> on 24 Oct 2023.</p>
+<pre><code>[[[R[[C[R[[FFFFFFFFFFFFFFFFF[[[R[[[[F]]]]][[[[F]]F]]]]R]]]R]]]]]</code></pre>
+<p><a href="https://susam.net/cfrs.html#B3RB2CBRB2F17B3RB4FE5B4FE2FE4RE3RE5">Run It</a></p>
+
+<h3 id="grey-motif">Grey Motif<a href="#grey-motif"></a></h3>
+<p>Contributed by <a href="https://github.com/btknu">btknu</a> on 24 Oct 2023.</p>
+<pre><code>[[[[[[[[[[[[[[[[[FF]]]]]][R]]][FF]]]]]RR]]R]]]</code></pre>
+<p><a href="https://susam.net/cfrs.html#B17F2E6BRE3BF2E5R2E2RE3">Run It</a></p>
+
+<h3 id="turkish-carpet">Turkish Carpet<a href="#turkish-carpet"></a></h3>
+<p>Contributed by <a href="https://github.com/aartaka">Artyom Bologov</a> on 10 May 2024.</p>
+<pre><code>[[[[[[[[[[[CFFRRFFRRFRRRRRRFF]RRRR]RR]RRRR]RR]RRR]RRR]RRR]RRR]]]</code></pre>
+<p><a href="https://susam.net/cfrs.html#B11CF2R2F2R2FR6F2ER4ER2ER4ER2ER3ER3ER3ER3E3">Run It</a></p>
+
+<h3 id="slanting-circles">Slanting Circles<a href="#slanting-circles"></a></h3>
+<p>Contributed by <a href="https://github.com/wong-justin">Justin Wong</a> on 22 Aug 2024.</p>
+<pre><code>[[[[[[[[[[FFRRF[RRR]]FRRF[[RRR]FRRFF]FF]FFFFRRRR]]]]]]]FFFFRRRR]</code></pre>
+<p><a href="https://susam.net/cfrs.html#B10F2R2FBR3E2FR2FB2R3EFR2F2EF2EF4R4E7F4R4E">Run It</a></p>
+
+<h2 id="credits">Credits</h2>
+<p>
+  All contributors featured on this page:
+</p>
+<ul>
+  <li><a href="https://github.com/btknu">btknu</a></li>
+  <li><a href="https://github.com/MystPi">MystPi</a></li>
+  <li><a href="https://github.com/aartaka">Artyom Bologov</a></li>
+  <li><a href="https://github.com/wong-justin">Justin Wong</a></li>
+</ul>
