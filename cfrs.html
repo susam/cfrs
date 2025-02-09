@@ -1,6 +1,6 @@
 <!--
-  CFRS[] 0.2.0
-  Copyright (c) 2023-2024 Susam Pal
+  CFRS[] 0.3.0-dev
+  Copyright (c) 2023-2025 Susam Pal
   Source: https://github.com/susam/cfrs
   License: MIT
 -->
@@ -170,8 +170,8 @@
 
       function resize () {
         document.body.style.padding = PADDING + 'px'
-        const availableWidth = window.innerWidth - 2 * PADDING
-        const availableHeight = window.innerHeight - 2 * PANEL_HEIGHT - 4 * PADDING
+        const availableWidth = document.documentElement.clientWidth - 2 * PADDING
+        const availableHeight = document.documentElement.clientHeight - 2 * PANEL_HEIGHT - 4 * PADDING
 
         // Resize canvas.
         canvasSize = Math.floor(Math.min(availableWidth, availableHeight))
@@ -660,7 +660,7 @@
       <ul>
         <li>
           <p>
-            Project documentation:
+            Documentation:
             <a href="https://github.com/susam/cfrs">github.com/susam/cfrs</a>
           </p>
         </li>

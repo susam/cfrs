@@ -1,6 +1,15 @@
 Changelog
 =========
 
+0.3.0 (2025-02-DD)
+------------------
+
+### Fixed
+
+- Canvas is larger than viewport on some mobile web browsers (such as
+  Chrome on Samsung Galaxy S8).
+
+
 0.2.0 (2024-04-06)
 ------------------
 
