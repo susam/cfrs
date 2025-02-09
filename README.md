@@ -41,7 +41,7 @@ Contents
 * [Distributable Links](#distributable-links)
 * [License](#license)
 * [Support](#support)
-* [More](#more)
+* [See Also](#see-also)
 
 
 Introduction
@@ -144,7 +144,7 @@ If you have an interesting demo that fits in 64 bytes of code, please
 [create an issue][ISSUES] and share it.  If the demo looks very
 interesting, it may be added to [demo.html][].
 
-[demo.html]: https://susam.github.io/demo.html
+[demo.html]: https://susam.github.io/cfrs/demo.html
 
 
 Canvas
@@ -368,8 +368,8 @@ To report bugs or ask questions, [create issues][ISSUES].
 [ISSUES]: https://github.com/susam/cfrs/issues
 
 
-More
-----
+See Also
+--------
 
 See [Andromeda Invaders](https://github.com/susam/invaders), a
 1980s-arcade-style game written using HTML5, Canvas, and Web Audio.
@@ -392,8 +392,8 @@ Release Checklist
 - Update CHANGES.md.
 - Run: npm run lint
 - Run: git status; git add -p
-- Run: VERSION=<VERSION>
-- Run: git commit -em "Set version to $VERSION"
-- Run: git tag $VERSION -m "CFRS[] $VERSION"
-- Run: git push origin main $VERSION
+- Run: VER=<VER>
+- Run: git commit -em "Set version to $VER"
+- Run: git tag $VER -m "CFRS[] $VER"
+- Run: git push origin main $VER
 -->
