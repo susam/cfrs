@@ -390,10 +390,19 @@ Release Checklist
 - Update copyright in LICENSE.md.
 - Disable logging.
 - Update CHANGES.md.
-- Run: npm run lint
-- Run: git status; git add -p
-- Run: VER=<VER>
-- Run: git commit -em "Set version to $VER"
-- Run: git tag $VER -m "CFRS[] $VER"
-- Run: git push origin main $VER
+- Run the following commands:
+
+  npm run lint
+  git status
+  git add -p
+
+  VER=<VER>
+  git commit -em "Set version to $VER"
+  git tag $VER -m "CFRS[] $VER"
+  git push origin main $VER
+
+  git remote add cb https://codeberg.org/susam/cfrs.git
+  git push cb --all
+  git push cb --tags
+  git push cb main:pages
 -->

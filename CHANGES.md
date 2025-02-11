@@ -6,8 +6,8 @@ Changelog
 
 ### Fixed
 
-- Canvas is larger than viewport on some mobile web browsers (such as
-  Chrome on Samsung Galaxy S8).
+- Canvas overflow on some mobile web browsers such as Chrome on
+  Samsung Galaxy S8.
 
 
 0.2.0 (2024-04-06)
