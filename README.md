@@ -202,7 +202,7 @@ total of 8 colours are supported.  They are:
 
 The initial colour is white.  Each `C` command changes the drawing
 colour to the next one in the above list.  When the current drawing
-colour is white, `C` changes the drawing colour to black, i.e., the
+colour is white, `C` changes the drawing colour to black, i.e. the
 drawing colour *wraps around* to black.
 
 The following code draws four cells in white (the initial colour),
@@ -232,7 +232,7 @@ paints that new cell it has moved to.
 
 When the turtle is at the edge of the canvas and the next command
 moves the turtle beyond the edge, the turtle simply wraps around to
-the opposite edge of the canvas, i.e., the turtle reenters the canvas
+the opposite edge of the canvas, i.e. the turtle reenters the canvas
 from the opposite edge.
 
 
@@ -268,10 +268,10 @@ after `[` continues as usual.
 
 The `]` command marks the end of a repeatable block.  When the
 evaluator reads `]`, it jumps back to the beginning of the current
-repeatable block, executes it again, and exits the block.  As a
-result, when the code evaluator enters a block marked with `[`, the
-block is executed twice before the evaluator leaves the end of the
-block marked with `]`.
+repeatable block, executes it again and exits the block.  As a result,
+when the code evaluator enters a block marked with `[`, the block is
+executed twice before the evaluator leaves the end of the block marked
+with `]`.
 
 
 Loops
@@ -344,15 +344,15 @@ fragment to the address of the current page.  Copy the URL with the
 encoded input code embedded in it from the address bar of the web
 browser in order to share it with others.  When the recipient of the
 URL opens it with their web browser, the implementation reads the code
-embedded in the URL, expands it, and executes it.
+embedded in the URL, expands it and executes it.
 
 
 License
 -------
 
 This is free and open source software.  You can use, copy, modify,
-merge, publish, distribute, sublicense, and/or sell copies of it,
-under the terms of the MIT License.  See [LICENSE.md][L] for details.
+merge, publish, distribute, sublicense and/or sell copies of it, under
+the terms of the MIT License.  See [LICENSE.md][L] for details.
 
 This software is provided "AS IS", WITHOUT WARRANTY OF ANY KIND,
 express or implied. See [LICENSE.md][L] for details.
@@ -372,7 +372,7 @@ See Also
 --------
 
 See [Andromeda Invaders](https://github.com/susam/invaders), a
-1980s-arcade-style game written using HTML5, Canvas, and Web Audio.
+1980s-arcade-style game written using HTML5, Canvas and Web Audio.
 
 See [FXYT](https://github.com/susam/fxyt), a tiny canvas colouring
 language with stack-based commands.
