@@ -2,7 +2,7 @@
   CFRS[] 0.3.0
   Copyright (c) 2023-2025 Susam Pal
   Source: https://github.com/susam/cfrs
-  License: MIT
+  Licence: MIT
 -->
 <!DOCTYPE html>
 <html lang="en">
@@ -81,7 +81,7 @@
       'use strict'
 
       const LOGGING = false
-      const COLORS = ['#000', '#36f', '#0c0', '#0cc',
+      const COLOURS = ['#000', '#36f', '#0c0', '#0cc',
         '#c00', '#c0c', '#cc0', '#ccc']
       const GRID_SIZE = 256
       const SLEEP_INTERVAL = 20
@@ -107,7 +107,7 @@
       let status
       let text
 
-      let buttonColor
+      let buttonColour
       let buttonForward
       let buttonRotate
       let buttonSleep
@@ -127,13 +127,13 @@
         status = document.getElementById('status')
         text = document.getElementById('text')
 
-        // Initialize canvas.
+        // Initialise canvas.
         ctx = canvas.getContext('2d')
         canvas.width = GRID_SIZE * SCALE
         canvas.height = GRID_SIZE * SCALE
 
-        // Initialize buttons.
-        buttonColor = document.getElementById('color')
+        // Initialise buttons.
+        buttonColour = document.getElementById('colour')
         buttonForward = document.getElementById('forward')
         buttonRotate = document.getElementById('rotate')
         buttonSleep = document.getElementById('sleep')
@@ -141,7 +141,7 @@
         buttonRepeat = document.getElementById('repeat')
         buttonDelete = document.getElementById('delete')
         buttonHelp = document.getElementById('help')
-        buttons = [buttonColor, buttonForward, buttonRotate, buttonSleep,
+        buttons = [buttonColour, buttonForward, buttonRotate, buttonSleep,
           buttonBlock, buttonRepeat, buttonDelete, buttonHelp]
 
         // Add event listeners for text.
@@ -150,7 +150,7 @@
         text.addEventListener('cut', actionKey)
 
         // Add event listeners for buttons.
-        buttonColor.addEventListener('click', actionColor)
+        buttonColour.addEventListener('click', actionColour)
         buttonForward.addEventListener('click', actionForward)
         buttonRotate.addEventListener('click', actionRotate)
         buttonBlock.addEventListener('click', actionBlock)
@@ -161,7 +161,7 @@
         window.addEventListener('hashchange', actionHash)
         window.addEventListener('resize', resize)
 
-        // Initialize input code and output.
+        // Initialise input code and output.
         resize()
         clearHelp()
         actionHash()
@@ -213,7 +213,7 @@
         clearHelp()
         log('draw', text.value)
         stopLooper()
-        ctx.fillStyle = COLORS[0]
+        ctx.fillStyle = COLOURS[0]
         ctx.fillRect(0, 0, GRID_SIZE * SCALE, GRID_SIZE * SCALE)
         evaluate()
         prevText = text.value
@@ -223,7 +223,7 @@
       let idx
       let x
       let y
-      let color
+      let colour
       let heading
       let ops
       let stack
@@ -233,13 +233,13 @@
       function evaluate () {
         x = Math.floor((GRID_SIZE - 1) / 2)
         y = Math.floor((GRID_SIZE - 1) / 2)
-        color = 7
+        colour = 7
         heading = 0
         ops = 0
         idx = 0
         stack = []
         startTime = Date.now()
-        logOp(ops, '-', idx, 'BEGIN', color, x, y, heading)
+        logOp(ops, '-', idx, 'BEGIN', colour, x, y, heading)
         if (text.value.length > MAX_CODE_LEN) {
           error('Code contains ' + text.value.length +
                 ' bytes; must not exceed ' + MAX_CODE_LEN)
@@ -289,7 +289,7 @@
         const op = text.value.charAt(idx)
         let loop = true
         if (op === 'C') {
-          color = (color + 1) % COLORS.length
+          colour = (colour + 1) % COLOURS.length
           ++idx
         } else if (op === 'F') {
           if (heading === 1 || heading === 2 || heading === 3) {
@@ -302,7 +302,7 @@
           } else if (heading === 3 || heading === 4 || heading === 5) {
             y = (y + 1) % GRID_SIZE
           }
-          ctx.fillStyle = COLORS[color]
+          ctx.fillStyle = COLOURS[colour]
           ctx.fillRect(x * SCALE, y * SCALE, SCALE, SCALE)
           ++idx
         } else if (op === 'R') {
@@ -330,13 +330,13 @@
           error('Unknown operation')
           return null
         }
-        logOp(ops, execIdx, idx, op, color, x, y, heading)
+        logOp(ops, execIdx, idx, op, colour, x, y, heading)
         ++ops
         return loop
       }
 
       function error (msg) {
-        ctx.fillStyle = COLORS[4]
+        ctx.fillStyle = COLOURS[4]
         ctx.fillRect(0, 0, GRID_SIZE * SCALE, GRID_SIZE * SCALE)
         status.innerHTML = 'ERROR: ' + msg
       }
@@ -352,7 +352,7 @@
             log('set code from hash:', text.value)
           }
         }
-        normalizeDraw()
+        normaliseDraw()
       }
 
       function updateHash () {
@@ -371,13 +371,13 @@
 
       function actionKey (e) {
         if (e.key !== 'Shift') {
-          window.setTimeout(normalizeDraw, 10)
+          window.setTimeout(normaliseDraw, 10)
         }
       }
 
-      function normalizeDraw () {
+      function normaliseDraw () {
         lookupDemo()
-        sanitizeText()
+        sanitiseText()
         updateHash()
         draw()
         if (questioned) {
@@ -393,7 +393,7 @@
         }
       }
 
-      function actionColor (e) {
+      function actionColour (e) {
         e.preventDefault()
         insertText('C')
         draw()
@@ -491,7 +491,7 @@
         updateHash()
       }
 
-      function sanitizeText () {
+      function sanitiseText () {
         let cursorStart = text.selectionStart
         let cursorEnd = text.selectionEnd
         const cursorDir = text.selectionDirection
@@ -575,9 +575,9 @@
         }
       }
 
-      function logOp (ops, execIdx, nextIdx, op, color, x, y, heading) {
+      function logOp (ops, execIdx, nextIdx, op, colour, x, y, heading) {
         if (LOGGING) {
-          log('(' + ops + ') ' + execIdx + ': ' + op + '; color: ' + color +
+          log('(' + ops + ') ' + execIdx + ': ' + op + '; colour: ' + colour +
               '; x: ' + x + '; y: ' + y + '; next: ' + nextIdx)
         }
       }
@@ -686,7 +686,7 @@
     <pre id="status"></pre>
     <input id="text" inputmode="none" autofocus placeholder="Type code here.">
     <div>
-      <button id="color" title="Change colour">C</button><!--
+      <button id="colour" title="Change colour">C</button><!--
       --><button id="forward" title="Move forward and paint cell">F</button><!--
       --><button id="rotate" title="Rotate by 45&deg;">R</button><!--
       --><button id="sleep" title="Sleep for 20 ms">S</button>

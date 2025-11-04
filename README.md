@@ -12,8 +12,8 @@ consists of only six simple commands:
 - `]`: Repeat the current block and exit the block.
 
 Note that `]` goes back to the beginning of the current repeatable
-block, executes it again, and exits the block.  Thus a block bounded
-by `[` and `]` behaves like a loop that runs twice before the block
+block, executes it again and exits the block.  Thus a block bounded by
+`[` and `]` behaves like a loop that runs twice before the block
 exits.  See sections [Commands](#commands) and [Loops](#loops) for
 more details about this.
 
@@ -39,7 +39,7 @@ Contents
 * [Loops](#loops)
 * [Code Normalisation and Validation](#code-normalisation-and-validation)
 * [Distributable Links](#distributable-links)
-* [License](#license)
+* [Licence](#licence)
 * [Support](#support)
 * [See Also](#see-also)
 
@@ -131,7 +131,7 @@ Here are direct links to demos currently available:
 [#1](https://susam.net/cfrs.html#1),
 [#2](https://susam.net/cfrs.html#2),
 [#3](https://susam.net/cfrs.html#3),
-[#4](https://susam.net/cfrs.html#4), and
+[#4](https://susam.net/cfrs.html#4),
 [#5](https://susam.net/cfrs.html#5).
 
 
@@ -171,9 +171,9 @@ has three properties:
 - Heading: The direction for the turtle's next movement if it moves.
 - Colour: The colour to be used for painting the next cell.
 
-Its current location, heading, and colour are determined by its
-initial properties and the preceding commands.  The initial properties
-of the turtle are as follows:
+Its current location, heading and colour are determined by its initial
+properties and the preceding commands.  The initial properties of the
+turtle are as follows:
 
 - Location: Row 127 and column 127.
 - Heading: North (up).
@@ -206,7 +206,7 @@ colour is white, `C` changes the drawing colour to black, i.e. the
 drawing colour *wraps around* to black.
 
 The following code draws four cells in white (the initial colour),
-then four cells in black, and finally four cells in blue.
+then four cells in black and finally four cells in blue.
 
 ```
 FFFFCFFFFCFFFF
@@ -347,15 +347,15 @@ URL opens it with their web browser, the implementation reads the code
 embedded in the URL, expands it and executes it.
 
 
-License
+Licence
 -------
 
 This is free and open source software.  You can use, copy, modify,
-merge, publish, distribute, sublicense and/or sell copies of it, under
-the terms of the MIT License.  See [LICENSE.md][L] for details.
+merge, publish, distribute, sublicence and/or sell copies of it, under
+the terms of the MIT Licence.  See [LICENSE.md][L] for details.
 
 This software is provided "AS IS", WITHOUT WARRANTY OF ANY KIND,
-express or implied. See [LICENSE.md][L] for details.
+express or implied.  See [LICENSE.md][L] for details.
 
 [L]: LICENSE.md
 
