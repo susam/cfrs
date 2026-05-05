@@ -1,6 +1,6 @@
 NAME = cfrs
 
-checks: tidy lint
+chk: tidy lint
 
 tidy:
 	tidy -q -e --warn-proprietary-attributes no $(NAME).html
