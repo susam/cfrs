@@ -16,7 +16,10 @@ cc:
 	git remote remove cc || :
 	git remote add cc git@codeberg.org:susam/$(NAME).git
 	git remote set-url cc --add git@github.com:susam/$(NAME).git
+	git remote remove origin || :
+	git remote add origin "$$(git remote get-url cc)"
 	git remote -v
+	git push origin main
 	git push cc main
 
 cp:
